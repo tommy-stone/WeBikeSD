@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
 
-  <body ng-app="cycleApp" layout="column" ng-controller="CycleController as ul">
+  <body ng-app="cycleApp" layout="column" ng-controller="CycleController as ul" layout-align="end start">
 <md-toolbar>
   <div class="md-toolbar-tools">
     <div layout="column" layout-align="start start">
@@ -116,7 +116,10 @@
         </md-sidenav>
 
     <ng-viewport></ng-viewport>
-    
+    <span flex></span>
+    <md-content id="counter">
+    <p>Counter Here</p>
+  </md-content>
 
     </div>
 
