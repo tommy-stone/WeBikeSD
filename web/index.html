@@ -15,7 +15,7 @@
   </head>
 
   <body ng-app="cycleApp" layout="column" ng-controller="CycleController as ul" layout-align="end start">
-<md-toolbar>
+<md-toolbar style="position:fixed">
   <div class="md-toolbar-tools">
     <div layout="column" layout-align="start start">
       <div layout="row">
@@ -46,7 +46,7 @@
     </md-button>
   </div>
 </md-toolbar>
-<div flex layout="column">
+<div flex layout="column" style="padding-top:60px;" layout-fill>
      <md-sidenav class="md-whiteframe-z2" md-component-id="left">
           <md-list>
             <md-item ng-repeat="it in ul.users">
@@ -109,9 +109,10 @@
             </md-item>
           </md-list>
           <md-divider></md-divider>
-          <footer layout="row">
-              <md-button ng-href="terms" ng-class="svg-1">Terms and Privacy</md-button>
-      
+          <footer layout="column">
+              <md-button ng-click="ul.openPage('terms')" ng-class="svg-1">Terms and Privacy</md-button>
+            
+          <p layout-padding><a href="mailto:support@cyclephilly.org">Contact Us</a></p>
            </footer>
         </md-sidenav>
 
