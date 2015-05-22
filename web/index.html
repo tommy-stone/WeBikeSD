@@ -110,16 +110,16 @@
           </md-list>
           <md-divider></md-divider>
           <footer layout="row">
-            <p layout-padding><a href="#">Terms and Privacy</a></p>
-          <p layout-padding><a href="#">Contact Us</a></p>
+              <md-button ng-href="terms" ng-class="svg-1">Terms and Privacy</md-button>
+      
            </footer>
         </md-sidenav>
 
     <ng-viewport></ng-viewport>
     <span flex></span>
-    <md-content id="counter" layout-padding>
-    <p>Counter Here</p>
-  </md-content>
+    <md-content id="counter" layout-padding style="height:50px">
+      <p>Counter Here</p>
+    </md-content>
 
     </div>
 
@@ -136,6 +136,7 @@
     
     <script src="./src/cycle.js"></script>
     <script src="./components/home/home.js"></script>
+    <script src="./components/terms/terms.js"></script>
     <script src="./components/about/about.js"></script>
     <script src="./components/partners/partners.js"></script>
     <script src="./components/shop/shop.js"></script>

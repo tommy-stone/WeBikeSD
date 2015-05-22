@@ -1,6 +1,6 @@
 (function(){
   angular
-    .module('cycleApp', ['cycle.home','cycle.about','cycle.maps','cycle.shop','cycle.partners','ngNewRouter','ngMaterial','ngMessages','firebase'])
+    .module('cycleApp', ['cycle.home','cycle.terms','cycle.about','cycle.maps','cycle.shop','cycle.partners','ngNewRouter','ngMaterial','ngMessages','firebase'])
     .config(function($mdThemingProvider, $mdIconProvider,$sceDelegateProvider,$httpProvider){
 
         $mdIconProvider
@@ -180,6 +180,7 @@
      { path: '/shop', component: 'shop' },
      { path: '/partners', component: 'partners' },
      { path: '/profile', component: 'profile' },
+     { path: '/terms', component: 'terms' },
      { path: '/auth', component: 'auth' },
      { path: '/register', component: 'register' }
     ]);
