@@ -6,26 +6,13 @@
         $mdIconProvider
             .defaultIconSet("./bower_components/angular-material/demos/icon/demoSvgIconSets/assets/core-icons.svg", 128)
             .icon("menu"       , "./assets/svg/menu.svg"        , 24)
-            .icon("results"       , "http://google.github.io/material-design-icons/action/svg/ic_receipt_24px.svg" , 24)
-            .icon("noteadd"       , "http://google.github.io/material-design-icons/action/svg/ic_note_add_24px.svg" , 24)
-
             .icon("star"      , "./assets/svg/star.svg"       , 24)
             .icon("help"      , "./assets/svg/help.svg"       , 24)
             .icon("shopping"      , "./assets/svg/shopping.svg"       , 24)
             .icon("map"      , "./assets/svg/map.svg"       , 24)
             .icon("share"      , "./assets/svg/share.svg"       , 24)
             .icon("home"      , "./assets/svg/home.svg"       , 24)
-            .icon("event-available"      , "./assets/svg/event-available.svg"       , 24)
-            .icon("search"      , "./assets/svg/search.svg"       , 24)
-            .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
-            .icon("hangouts"   , "./assets/svg/hangouts.svg"    , 512)
-            .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
-            .icon("home"    , "//google.github.io/material-design-icons/action/svg/ic_home_24px.svg"     , 24)
-            .icon("list"    , "//google.github.io/material-design-icons/action/svg/ic_list_24px.svg"     , 24)
-            .icon("more-vert"    , "//google.github.io/material-design-icons/navigation/svg/ic_more_vert_24px.svg"     , 24)
-            .icon("search"    , "//google.github.io/material-design-icons/action/svg/ic_search_24px.svg"     , 24)
-            .icon("phone"      , "./assets/svg/phone.svg"       , 512)
-
+            
 
             $mdThemingProvider.theme('default')
                  .primaryPalette('grey', {
