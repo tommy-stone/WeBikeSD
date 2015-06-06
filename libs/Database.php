@@ -9,10 +9,8 @@ require_once( 'Util.php' );
 
 abstract class DatabaseConnection extends mysqli
 {
-	// const USER     = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
-	// const PASSWORD = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
-	const DATABASE = 'cyclelive';
-	// const PORT = getenv('OPENSHIFT_MYSQL_DB_PORT');
+	
+	// const DATABASE = 'cyclelive';
 
 	public function __construct( $host, $user, $password, $database, $port )
 	{
@@ -37,11 +35,25 @@ class LocalDatabaseConnection extends DatabaseConnection
 
 	public function __construct()
 	{
-		$host = 'cycle.c0pz9rduf4ic.us-east-1.rds.amazonaws.com';//173.194.251.23' ;
+		$database = 'cyclelive';
+		/*
+		* If you are using openshift mysql database cartridge, or want to use it for testing, uncomment this section, and comment out any other database construct ref
+		*
+		// This requires the inclusion of mysql db cartridge. 
+		$host = (getenv('OPENSHIFT_MYSQL_DB_HOST')) ? getenv('OPENSHIFT_MYSQL_DB_HOST') : putenv('OPENSHIFT_MYSQL_DB_HOST=localhost') ;
+		$port = (getenv('OPENSHIFT_MYSQL_DB_PORT')) ? getenv('OPENSHIFT_MYSQL_DB_PORT') : putenv('OPENSHIFT_MYSQL_DB_PORT=3306');
+		$user = (getenv('OPENSHIFT_MYSQL_DB_USERNAME')) ? getenv('OPENSHIFT_MYSQL_DB_USERNAME') : putenv('OPENSHIFT_MYSQL_DB_USERNAME=root') ;
+		$pass = (getenv('OPENSHIFT_MYSQL_DB_PASSWORD')) ? getenv('OPENSHIFT_MYSQL_DB_PASSWORD') : putenv('OPENSHIFT_MYSQL_DB_PASSWORD=root') ;
+
+		parent::__construct( getenv('OPENSHIFT_MYSQL_DB_HOST'), getenv('OPENSHIFT_MYSQL_DB_USERNAME'), getenv('OPENSHIFT_MYSQL_DB_PASSWORD'), self::DATABASE, getenv('OPENSHIFT_MYSQL_DB_PORT') );
+		*
+		*/
+		
+		$host = 'cycle.c0pz9rduf4ic.us-east-1.rds.amazonaws.com';
 		$port = '3306';
 		$user = 'cycleUser' ;
 		$pass = 'Ph1lly123';
-		parent::__construct( $host, $user, $pass, self::DATABASE, $port );
+		parent::__construct( $host, $user, $pass, $database, $port );
 	}
 }
 

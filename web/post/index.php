@@ -6,6 +6,19 @@ require_once('TripFactory.php');
 require_once('CoordFactory.php');
 require_once('NoteFactory.php');
 require_once('Decompress.php');
+require '../vendor/autoload.php';
+
+use Aws\Resource\Aws;
+
+$config = array(
+	"aws_access_key_id"=>"AKIAJLFHLZF7Q5IWCYWA",
+	"aws_secret_access_key"=>"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"
+	);
+// Get a resource representing the S3 service.
+$s3 = $aws->s3;
+$bucket = $aws->s3->bucket('cycle-li');
+$object = $bucket->object('uploads/money.svg');
+var_dump($object['LastModified']);
 
 define( 'DATE_FORMAT',        'Y-m-d h:i:s' );
 define( 'PROTOCOL_VERSION_1', 1 );
@@ -16,7 +29,6 @@ define( 'PROTOCOL_VERSION_4', 4 ); // this is for uploading the note data (compr
 Util::log( " ");
 Util::log( "+++++++++++++ Production: Upload Start +++++++++++++");
 
-var_dump(getenv('OPENSHIFT_MYSQL_DB_HOST'));exit;
 /*
 Util::log ( "++++ HTTP Headers ++++" );
 $headers = array();
