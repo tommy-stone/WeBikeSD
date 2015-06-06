@@ -16,6 +16,7 @@ define( 'PROTOCOL_VERSION_4', 4 ); // this is for uploading the note data (compr
 Util::log( " ");
 Util::log( "+++++++++++++ Production: Upload Start +++++++++++++");
 
+var_dump(getenv('OPENSHIFT_MYSQL_DB_HOST'));exit;
 /*
 Util::log ( "++++ HTTP Headers ++++" );
 $headers = array();
