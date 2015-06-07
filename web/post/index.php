@@ -1,4 +1,16 @@
 <?php
+require '../vendor/autoload.php';
+
+use Aws\S3\S3Client;
+// $aws = Aws::factory($config);
+
+
+// Instantiate an Amazon S3 client.
+$s3Client = S3Client::factory(array(
+	'version' => 'latest',
+    'region'  => 'us-east-1',
+    'credentials' => false
+));
 
 require_once('Util.php');
 require_once('UserFactory.php');
@@ -6,19 +18,8 @@ require_once('TripFactory.php');
 require_once('CoordFactory.php');
 require_once('NoteFactory.php');
 require_once('Decompress.php');
-require '../vendor/autoload.php';
 
-use Aws\Resource\Aws;
 
-$config = array(
-	"aws_access_key_id"=>"AKIAJLFHLZF7Q5IWCYWA",
-	"aws_secret_access_key"=>"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"
-	);
-// Get a resource representing the S3 service.
-$s3 = $aws->s3;
-$bucket = $aws->s3->bucket('cycle-li');
-$object = $bucket->object('uploads/money.svg');
-var_dump($object['LastModified']);
 
 define( 'DATE_FORMAT',        'Y-m-d h:i:s' );
 define( 'PROTOCOL_VERSION_1', 1 );
@@ -278,6 +279,15 @@ if ( is_string( $device ) /*&& strlen( $device ) === 32 || strlen( $device ) ===
 				header("HTTP/1.1 200 Ok");
 				$response = new stdClass;
 				$response->status = 'success';
+				try {
+				    $result = $s3Client->putObject(array(
+				    'Bucket' => 'cycle-li',
+				    'Key'    => 'uploads/'.$trip->id'-'.time('now'),
+				    'Body'   => $HTTP_RAW_POST_DATA
+				));
+				} catch (Aws\Exception\S3Exception $e) {
+				    Util::log( "There was an error uploading the file.\n");
+				}
 				echo json_encode( $response );
 				exit;
 			}

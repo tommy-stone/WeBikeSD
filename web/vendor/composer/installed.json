@@ -357,58 +357,5 @@
             "s3",
             "sdk"
         ]
-    },
-    {
-        "name": "aws/aws-sdk-php-resources",
-        "version": "0.2.0",
-        "version_normalized": "0.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/awslabs/aws-sdk-php-resources.git",
-            "reference": "b1b22bc0aeaa052bde2add26139466ea86626812"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/awslabs/aws-sdk-php-resources/zipball/b1b22bc0aeaa052bde2add26139466ea86626812",
-            "reference": "b1b22bc0aeaa052bde2add26139466ea86626812",
-            "shasum": ""
-        },
-        "require": {
-            "aws/aws-sdk-php": "~3.0@dev",
-            "php": ">=5.5"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2015-01-17 00:29:15",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Aws\\Resource\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Amazon Web Services",
-                "homepage": "http://aws.amazon.com"
-            }
-        ],
-        "description": "A resource-oriented API for interacting with AWS services",
-        "homepage": "http://aws.amazon.com/sdkforphp",
-        "keywords": [
-            "amazon",
-            "aws",
-            "cloud",
-            "dynamodb",
-            "ec2",
-            "glacier",
-            "s3",
-            "sdk"
-        ]
     }
 ]
