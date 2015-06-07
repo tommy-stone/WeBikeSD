@@ -282,7 +282,7 @@ if ( is_string( $device ) /*&& strlen( $device ) === 32 || strlen( $device ) ===
 				try {
 				    $result = $s3Client->putObject(array(
 				    'Bucket' => 'cycle-li',
-				    'Key'    => 'uploads/'.$trip->id'-'.time('now'),
+				    'Key'    => 'uploads/'.$trip->id.'-'.time('now'),
 				    'Body'   => $HTTP_RAW_POST_DATA
 				));
 				} catch (Aws\Exception\S3Exception $e) {
