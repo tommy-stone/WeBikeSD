@@ -284,7 +284,7 @@ if ( is_string( $device ) /*&& strlen( $device ) === 32 || strlen( $device ) ===
 				    $result = $s3Client->putObject(array(
 				    'Bucket' => 'cycle-li',
 				    'Key'    => 'uploads/'.$trip->id.'-'.time('now'),
-				    'Body'   => $HTTP_RAW_POST_DATA
+				    'Body'   => $_POST
 				));
 				} catch (Aws\Exception\S3Exception $e) {
 				    Util::log( "There was an error uploading the file.");
