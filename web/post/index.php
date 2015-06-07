@@ -283,6 +283,7 @@ if ( is_string( $device ) /*&& strlen( $device ) === 32 || strlen( $device ) ===
 				try {
 				    $result = $s3Client->putObject(array(
 				    'Bucket' => 'cycle-li',
+				    'ACL'	=> 'bucket-owner-read',
 				    'Key'    => 'uploads/'.$trip->id.'-'.time('now'),
 				    'Body'   => $_POST
 				));
