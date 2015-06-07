@@ -287,7 +287,7 @@ if ( is_string( $device ) /*&& strlen( $device ) === 32 || strlen( $device ) ===
 				    'Body'   => $HTTP_RAW_POST_DATA
 				));
 				} catch (Aws\Exception\S3Exception $e) {
-				    Util::log( "There was an error uploading the file.\n");
+				    Util::log( "There was an error uploading the file.");
 				}
 				echo json_encode( $response );
 				exit;
