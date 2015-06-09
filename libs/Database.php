@@ -35,7 +35,7 @@ class LocalDatabaseConnection extends DatabaseConnection
 
 	public function __construct()
 	{
-		$database = (getenv('CYCLE_DB_NAME')) ? getenv('CYCLE_DB_NAME') : putenv('CYCLE_DB_NAME=localhost');
+		$database = 'cyclelive';
 		/*
 		* If you are using openshift mysql database cartridge, or want to use it for testing, uncomment this section, and comment out any other database construct ref
 		*/
