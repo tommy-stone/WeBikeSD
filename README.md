@@ -1,4 +1,4 @@
-# cycle_
+# cyclephilly
 CyclePhilly bike tracking application
 ===================
 
