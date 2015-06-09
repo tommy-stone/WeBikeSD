@@ -1,5 +1,5 @@
 # cycle_
-Cycle_ white label bike tracking application
+CyclePhilly bike tracking application
 ===================
 
 This Git repository helps you get up and running quickly w/ with the cycle_ back-end
