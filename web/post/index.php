@@ -280,7 +280,7 @@ if ( is_string( $device ) /*&& strlen( $device ) === 32 || strlen( $device ) ===
 				header("HTTP/1.1 200 Ok");
 				$response = new stdClass;
 				$response->status = 'success';
-				$appName = (getenv('OPENSHIFT_APP_NAME')) ? getenv('OPENSHIFT_APP_NAME') : putenv('OPENSHIFT_APP_NAME=anon')
+				$appName = (getenv('OPENSHIFT_APP_NAME')) ? getenv('OPENSHIFT_APP_NAME') : putenv('OPENSHIFT_APP_NAME=anon');
 				try {
 				    $result = $s3Client->putObject(array(
 				    'Bucket' => 'cycle-li',
