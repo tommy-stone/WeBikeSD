@@ -47,10 +47,10 @@ class LocalDatabaseConnection extends DatabaseConnection
 
 		// parent::__construct( getenv('OPENSHIFT_MYSQL_DB_HOST'), getenv('OPENSHIFT_MYSQL_DB_USERNAME'), getenv('OPENSHIFT_MYSQL_DB_PASSWORD'), self::DATABASE, getenv('OPENSHIFT_MYSQL_DB_PORT') );
 		
-		$host = 'cycle.c0pz9rduf4ic.us-east-1.rds.amazonaws.com';
+		$host = 'localhost';
 		$port = '3306';
-		$user = 'cycleUser' ;
-		$pass = 'Ph1lly123';
+		$user = 'root' ;
+		$pass = 'root';
 		parent::__construct( $host, $user, $pass, $database, $port );
 	}
 }
