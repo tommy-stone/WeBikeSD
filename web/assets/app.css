@@ -39,6 +39,19 @@ body{
   font-family: ChunkFive,Helvetica,Arial,sans-serif;
 }
 
+#counter {
+bottom: 0px;
+width: 100%;
+position: fixed;
+color: #16A6C9;
+float: left;
+font-family: Arial, sans-serif;
+font-size: 15px;
+font-weight: bold;
+background: rgba(0,0,0,0.9);
+font-family: ChunkFive, Helvetica, Arial, sans-serif;
+}
+
 .menu-link{
   padding-left:10px;
   font-size:1em;
