@@ -42,12 +42,12 @@ body{
 #counter {
 bottom: 0px;
 width: 100%;
+  height: 50px;
 position: fixed;
-color: #16A6C9;
+color: #ffffff;
 float: left;
 font-family: Arial, sans-serif;
 font-size: 15px;
-font-weight: bold;
 background: rgba(0,0,0,0.9);
 font-family: ChunkFive, Helvetica, Arial, sans-serif;
 }
