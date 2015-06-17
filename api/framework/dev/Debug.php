@@ -347,7 +347,7 @@ class Debug {
 					class_exists('Translatable') ? Translatable::get_current_locale() : null
 				);
 				if(file_exists($errorFilePath)) {
-					$content = file_get_contents($errorFilePath);
+					$content = file_get_contents(ASSETS_PATH . "/error-$statusCode.html");
 					if(!headers_sent()) header('Content-Type: text/html');
 					// $BaseURL is left dynamic in error-###.html, so that multi-domain sites don't get broken
 					echo str_replace('$BaseURL', Director::absoluteBaseURL(), $content);

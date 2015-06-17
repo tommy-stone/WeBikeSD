@@ -6,7 +6,7 @@
  * @package framework
  * @subpackage filesystem
  */
-class Image extends File implements Flushable {
+class Image extends File {
 	
 	const ORIENTATION_SQUARE = 0;
 	const ORIENTATION_PORTRAIT = 1;
@@ -71,26 +71,13 @@ class Image extends File implements Flushable {
 	 * @var bool Force all images to resample in all cases
 	 */
 	private static $force_resample = false;
-
-	/**
-	 * @config
-	 * @var bool Regenerates images if set to true. This is set by {@link flush()}
-	 */
-	private static $flush = false;
-
-	/**
-	 * Triggered early in the request when someone requests a flush.
-	 */
-	public static function flush() {
-		self::$flush = true;
-	}
-
+	
 	public static function set_backend($backend) {
-		self::config()->backend = $backend;
+		self::$backend = $backend;
 	}
-
+	
 	public static function get_backend() {
-		return self::config()->backend;
+		return self::$backend;
 	}
 	
 	/**
@@ -437,7 +424,7 @@ class Image extends File implements Flushable {
 		if($this->ID && $this->Filename && Director::fileExists($this->Filename)) {
 			$cacheFile = call_user_func_array(array($this, "cacheFilename"), $args);
 			
-			if(!file_exists(Director::baseFolder()."/".$cacheFile) || self::$flush) {
+			if(!file_exists(Director::baseFolder()."/".$cacheFile) || isset($_GET['flush'])) {
 				call_user_func_array(array($this, "generateFormattedImage"), $args);
 			}
 			
@@ -477,7 +464,7 @@ class Image extends File implements Flushable {
 		
 		$cacheFile = call_user_func_array(array($this, "cacheFilename"), $args);
 		
-		$backend = Injector::inst()->createWithArgs(self::config()->backend, array(
+		$backend = Injector::inst()->createWithArgs(self::$backend, array(
 			Director::baseFolder()."/" . $this->Filename
 		));
 		
@@ -595,7 +582,7 @@ class Image extends File implements Flushable {
 		}
 		// All generate functions may appear any number of times in the image cache name.
 		$generateFuncs = implode('|', $generateFuncs);
-		$pattern = "/^(({$generateFuncs}).*\-)+" . preg_quote($this->Name) . "$/i";
+		$pattern = "/^(({$generateFuncs})\d+\-)+" . preg_quote($this->Name) . "$/i";
 
 		foreach($cachedFiles as $cfile) {
 			if(preg_match($pattern, $cfile)) {

@@ -7,9 +7,6 @@
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 class TokenAccessible extends DataExtension {
-	
-	private $authToken = null;
-	
 	private static $db = array(
 		'Active'			=> 'Boolean',
 		'Token'				=> 'Varchar(128)',
@@ -18,13 +15,13 @@ class TokenAccessible extends DataExtension {
 	);
 	
 	public function onBeforeWrite() {
-		if (!$this->owner->Token || !$this->owner->AuthPrivateKey) {
+		
+		if (!$this->owner->Token) {
 			$this->owner->RegenerateTokens = true;
 		}
-		
-		if ($this->owner->RegenerateTokens) {
-			$this->owner->RegenerateTokens = false;
-			$this->generateTokens();
+
+		if (!$this->owner->AuthPrivateKey) {
+			$this->owner->RegenerateTokens = true;
 		}
 	}
 
@@ -49,9 +46,10 @@ class TokenAccessible extends DataExtension {
 	}
 	
 	public function onAfterWrite() {
-		if ($this->authToken) {
-			// store the new token so it can be displayed later
-			Session::set('member_auth_token_' . $this->owner->ID, $this->authToken);
+		if ($this->owner->RegenerateTokens) {
+			$this->owner->RegenerateTokens = false;
+			$this->generateTokens();
+			$this->owner->write();
 		}
 	}
 	
@@ -65,8 +63,8 @@ class TokenAccessible extends DataExtension {
 		$token = $generator->randomToken('sha1');
 		$this->owner->Token = $this->owner->encryptWithUserSettings($token);
 		
-		$this->authToken = $token;
-		
+		// store the new token so it can be displayed later
+		Session::set('member_auth_token_' . $this->owner->ID, $token);
 
 		$authToken = $generator->randomToken('whirlpool');
 		$this->owner->AuthPrivateKey = $authToken;

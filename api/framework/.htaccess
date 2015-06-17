@@ -1,9 +1,9 @@
 <FilesMatch "\.(php|php3|php4|php5|phtml|inc)$">
-	Deny from all
+	Require all denied
 </FilesMatch>
 <FilesMatch "(main|rpc|tiny_mce_gzip)\.php$">
-	Allow from all
+	Require all granted
 </FilesMatch>
 <FilesMatch "silverstripe_version$">
-	Deny from all
+	Require all denied
 </FilesMatch>

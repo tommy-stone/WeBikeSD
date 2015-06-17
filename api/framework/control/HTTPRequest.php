@@ -68,7 +68,7 @@ class SS_HTTPRequest implements ArrayAccess {
 	protected $body;
 	
 	/**
-	 * @var array $allParams Contains an associative array of all
+	 * @var array $allParams Contains an assiciative array of all
 	 * arguments matched in all calls to {@link RequestHandler->handleRequest()}.
 	 * It's a "historical record" that's specific to the current call of
 	 * {@link handleRequest()}, and is only complete once the "last call" to that method is made.
@@ -395,7 +395,7 @@ class SS_HTTPRequest implements ArrayAccess {
 		$response = new SS_HTTPResponse($fileData);
 		$response->addHeader("Content-Type", "$mimeType; name=\"" . addslashes($fileName) . "\"");
 		// Note a IE-only fix that inspects this header in HTTP::add_cache_headers().
-		$response->addHeader("Content-Disposition", "attachment; filename=" . addslashes($fileName));
+		$response->addHeader("Content-disposition", "attachment; filename=" . addslashes($fileName));
 		$response->addHeader("Content-Length", strlen($fileData));
 		
 		return $response;

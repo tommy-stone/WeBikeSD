@@ -30,6 +30,7 @@ class Text extends StringField {
 		'EscapeXML' => 'Text',
 		'LimitWordCount' => 'Text',
 		'LimitWordCountXML' => 'HTMLText',
+		'NoHTML' => 'Text',
 	);
 	
 	/**
@@ -50,6 +51,15 @@ class Text extends StringField {
 		);
 
 		DB::requireField($this->tableName, $this->name, $values, $this->default);
+	}
+	
+	/**
+	 * Return the value of the field stripped of html tags.
+	 *
+	 * @return string
+	 */
+	public function NoHTML() {
+		return strip_tags($this->value);
 	}
 
 	/**
@@ -91,20 +101,17 @@ class Text extends StringField {
 	 * Caution: Not XML/HTML-safe - does not respect closing tags.
 	 */
 	public function FirstSentence() {
-		$paragraph = Convert::xml2raw( $this->value );
-		if( !$paragraph ) return "";
-
-		$words = preg_split('/\s+/', $paragraph);
-		foreach ($words as $i => $word) {
-			if (preg_match('/(!|\?|\.)$/', $word) && !preg_match('/(Dr|Mr|Mrs|Ms|Miss|Sr|Jr|No)\.$/i', $word)) {
-				return implode(' ', array_slice($words, 0, $i+1));
-			}
-		}
-
-		/* If we didn't find a sentence ending, use the summary. We re-call rather than using paragraph so that
-		 * Summary will limit the result this time */
-		return $this->Summary(20);
-	}
+		$data = Convert::xml2raw( $this->value );
+		if( !$data ) return "";
+		
+		
+		$sentences = explode( '.', $data );
+		
+		if( count( $sentences ) )
+			return $sentences[0] . '.';
+		else
+			return $this->Summary(20);
+	}	
 
 	/**
 	 * Caution: Not XML/HTML-safe - does not respect closing tags.
@@ -149,14 +156,14 @@ class Text extends StringField {
 	* Performs the same function as the big summary, but doesn't trim new paragraphs off data.
 	* Caution: Not XML/HTML-safe - does not respect closing tags.
 	*/
-	public function BigSummary($maxWords = 50, $plain = true) {
-		$result = '';
-
+	public function BigSummary($maxWords = 50, $plain = 1) {
+		$result = "";
+		
 		// get first sentence?
 		// this needs to be more robust
-		$data = $plain ? Convert::xml2raw($this->value, true) : $this->value;
-
-		if(!$data) return '';
+		if($plain) $data = Convert::xml2raw($this->value, true);
+		
+		if(!$data) return "";
 			
 		$sentences = explode('.', $data);	
 		$count = count(explode(' ', $sentences[0]));

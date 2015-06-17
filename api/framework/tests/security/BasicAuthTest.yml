@@ -1,19 +1,15 @@
 Group:
-  mygroup:
-    Code: mygroup
+   mygroup:
+      Code: mygroup
 Member:
-  user-in-mygroup:
-    Email: user-in-mygroup@test.com
-    Password: test
-    Groups: =>Group.mygroup
-  user-without-groups:
-    Email: user-without-groups@test.com
-    Password: test
-  failed-login:
-    Email: failedlogin@test.com
-    Password: Password
-    FailedLoginCount: 0
+   user-in-mygroup:
+      Email: user-in-mygroup@test.com
+      Password: test
+      Groups: =>Group.mygroup
+   user-without-groups:
+      Email: user-without-groups@test.com
+      Password: test
 Permission:
-  mycode:
-    Code: MYCODE
-    Group: =>Group.mygroup
+   mycode:
+      Code: MYCODE
+      Group: =>Group.mygroup

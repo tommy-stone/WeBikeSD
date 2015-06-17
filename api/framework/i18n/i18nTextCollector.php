@@ -628,13 +628,9 @@ class i18nTextCollector_Writer_RailsYaml implements i18nTextCollector_Writer {
 		}
 
 		// Write YAML
-		$oldVersion = sfYaml::getSpecVersion();
-		sfYaml::setSpecVersion('1.1');
 		$yamlHandler = new sfYaml();
 		// TODO Dumper can't handle YAML comments, so the context information is currently discarded
-		$result = $yamlHandler->dump(array($locale => $entitiesNested), 99);
-		sfYaml::setSpecVersion($oldVersion);
-		return $result;
+		return $yamlHandler->dump(array($locale => $entitiesNested), 99);
 	}
 }
 

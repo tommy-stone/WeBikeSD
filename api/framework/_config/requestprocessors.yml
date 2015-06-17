@@ -5,5 +5,4 @@ Injector:
   RequestProcessor:
     properties:
       filters:
-        - '%$FlushRequestFilter'
         - '%$VersionedRequestFilter'

@@ -64,9 +64,8 @@ function getTempParentFolder($base = null) {
 	}
 
 	// failing the above, try finding a namespaced silverstripe-cache dir in the system temp
-	$tempPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 
-		'silverstripe-cache-php' . preg_replace('/[^\w-\.+]+/', '-', PHP_VERSION) . 
-		str_replace(array(' ', '/', ':', '\\'), '-', $base);
+	$cacheFolder = DIRECTORY_SEPARATOR . 'silverstripe-cache' . str_replace(array(' ', '/', ':', '\\'), '-', $base);
+	$tempPath = sys_get_temp_dir() . $cacheFolder;
 	if(!@file_exists($tempPath)) {
 		$oldUMask = umask(0);
 		$worked = @mkdir($tempPath, 0777);

@@ -5,7 +5,7 @@
  * @package framework
  * @subpackage tests
  */
-class HTTPTest extends FunctionalTest {
+class HTTPTest extends SapphireTest {
 	
 	/**
 	 * Tests {@link HTTP::getLinksIn()}
@@ -161,27 +161,6 @@ class HTTPTest extends FunctionalTest {
 	public function testAbsoluteURLsAttributes() {
 		$this->withBaseURL('http://www.silverstripe.org/', function($test){
 			
-			//empty links
-			$test->assertEquals(
-				'<a href="http://www.silverstripe.org/">test</a>',
-				HTTP::absoluteURLs('<a href="">test</a>')
-			);
-
-			$test->assertEquals(
-				'<a href="http://www.silverstripe.org/">test</a>',
-				HTTP::absoluteURLs('<a href="/">test</a>')
-			);
-
-			//relative
-			$test->assertEquals(
-				'<a href="http://www.silverstripe.org/">test</a>',
-				HTTP::absoluteURLs('<a href="./">test</a>')
-			);
-			$test->assertEquals(
-				'<a href="http://www.silverstripe.org/">test</a>',
-				HTTP::absoluteURLs('<a href=".">test</a>')
-			);
-
 			// links
 			$test->assertEquals(
 				'<a href=\'http://www.silverstripe.org/blog/\'>SS Blog</a>',
@@ -248,5 +227,16 @@ class HTTPTest extends FunctionalTest {
 			);	
 		});
 	}
-
+	
+	/**
+	 * Run a test while mocking the base url with the provided value
+	 * @param string $url The base URL to use for this test
+	 * @param callable $callback The test to run
+	 */
+	protected function withBaseURL($url, $callback) {
+		$oldBase = Config::inst()->get('Director', 'alternate_base_url');
+		Config::inst()->update('Director', 'alternate_base_url', $url);
+		$callback($this);
+		Config::inst()->update('Director', 'alternate_base_url', $oldBase);
+	}
 }

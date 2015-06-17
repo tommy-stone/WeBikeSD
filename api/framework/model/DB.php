@@ -171,7 +171,7 @@ class DB {
 		self::$connection_attempted = true;
 
 		$dbClass = $databaseConfig['type'];
-		$conn = Injector::inst()->create($dbClass, $databaseConfig);
+		$conn = new $dbClass($databaseConfig);
 
 		self::setConn($conn, $label);
 

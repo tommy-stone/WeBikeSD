@@ -140,14 +140,7 @@ class HtmlEditorField extends TextareaField {
 			// Add default empty title & alt attributes.
 			if(!$img->getAttribute('alt')) $img->setAttribute('alt', '');
 			if(!$img->getAttribute('title')) $img->setAttribute('title', '');
-		
-			// Use this extension point to manipulate images inserted using TinyMCE, e.g. add a CSS class, change default title
-			// $image is the image, $img is the DOM model
-			$this->extend('processImage', $image, $img);
 		}
-
-		// optionally manipulate the HTML after a TinyMCE edit and prior to a save
-		$this->extend('processHTML', $htmlValue);
 
 		// Store into record
 		$record->{$this->name} = $htmlValue->getContent();
@@ -197,8 +190,7 @@ class HtmlEditorField_Toolbar extends RequestHandler {
 	private static $allowed_actions = array(
 		'LinkForm',
 		'MediaForm',
-		'viewfile',
-		'getanchors'
+		'viewfile'
 	);
 
 	/**
@@ -524,41 +516,6 @@ class HtmlEditorField_Toolbar extends RequestHandler {
 		return $fileWrapper->customise(array(
 			'Fields' => $fields,
 		))->renderWith($this->templateViewFile);
-	}
-
-	/**
-	 * Find all anchors available on the given page.
-	 *
-	 * @return array
-	 */
-	public function getanchors() {
-		$id = (int)$this->request->getVar('PageID');
-		$anchors = array();
-
-		if (($page = Page::get()->byID($id)) && !empty($page)) {
-			if (!$page->canView()) {
-				throw new SS_HTTPResponse_Exception(
-					_t(
-						'HtmlEditorField.ANCHORSCANNOTACCESSPAGE',
-						'You are not permitted to access the content of the target page.'
-					),
-					403
-				);
-			}
-
-			// Similar to the regex found in HtmlEditorField.js / getAnchors method.
-			if (preg_match_all("/name=\"([^\"]+?)\"|name='([^']+?)'/im", $page->Content, $matches)) {
-				$anchors = $matches[1];
-			}
-
-		} else {
-			throw new SS_HTTPResponse_Exception(
-				_t('HtmlEditorField.ANCHORSPAGENOTFOUND', 'Target page not found.'),
-				404
-			);
-		}
-
-		return json_encode($anchors);
 	}
 
 	/**

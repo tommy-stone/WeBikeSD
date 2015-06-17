@@ -147,8 +147,10 @@ class GridFieldPrintButton implements GridField_HTMLProvider, GridField_ActionPr
 		} else {
 			if ($currentController->Title) {
 				$title = $currentController->Title;
-			} elseif ($form->getName()) {
-				$title = $form->getName();
+			} else {
+				if($form->Name()){
+					$title = $form->Name();
+				}
 			}
 		}
 
@@ -191,10 +193,6 @@ class GridFieldPrintButton implements GridField_HTMLProvider, GridField_ActionPr
 			
 			foreach($printColumns as $field => $label) {
 				$value = $gridField->getDataFieldValue($item, $field);
-
-				if($item->escapeTypeForField($field) != 'xml') {
-					$value = Convert::raw2xml($value);
-				}
 
 				$itemRow->push(new ArrayData(array(
 					"CellString" => $value,

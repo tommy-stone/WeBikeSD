@@ -256,7 +256,6 @@ class DataQuery {
 
 		if($orderby = $query->getOrderBy()) {
 			$newOrderby = array();
-			$i = 0;
 			foreach($orderby as $k => $dir) {
 				$newOrderby[$k] = $dir;
 				
@@ -269,10 +268,7 @@ class DataQuery {
 
 				// Pull through SortColumn references from the originalSelect variables
 				if(preg_match('/_SortColumn/', $col)) {
-					if(isset($originalSelect[$col])) {
-						$query->selectField($originalSelect[$col], $col);
-					}
-
+					if(isset($originalSelect[$col])) $query->selectField($originalSelect[$col], $col);
 					continue;
 				}
 				
@@ -291,7 +287,6 @@ class DataQuery {
 						
 					// remove original sort
 					unset($newOrderby[$k]);
-
 					// add new columns sort
 					$newOrderby[$qualCol] = $dir;
 							
@@ -303,17 +298,13 @@ class DataQuery {
 					}
 				} else {
 					$qualCol = '"' . implode('"."', $parts) . '"';
-
+					
+					// To-do: Remove this if block once SQLQuery::$select has been refactored to store getSelect()
+					// format internally; then this check can be part of selectField()
 					if(!in_array($qualCol, $query->getSelect())) {
-						unset($newOrderby[$k]);
-						
-						$newOrderby["\"_SortColumn$i\""] = $dir;
-						$query->selectField($qualCol, "_SortColumn$i");
-
-						$i++;
+						$query->selectField($qualCol);
 					}
 				}
-
 			}
 
 			$query->setOrderBy($newOrderby);
@@ -550,17 +541,6 @@ class DataQuery {
 	}
 
 	/**
-	 * Set whether this query should be distinct or not.
-	 *
-	 * @param bool $value
-	 * @return DataQuery
-	 */
-	public function distinct($value) {
-		$this->query->setDistinct($value);
-		return $this;
-	}
-
-	/**
 	 * Add an INNER JOIN clause to this query.
 	 * 
 	 * @param String $table The unquoted table name to join to.
@@ -608,10 +588,9 @@ class DataQuery {
 			$model = singleton($modelClass);
 			if ($component = $model->has_one($rel)) {
 				if(!$this->query->isJoinedTo($component)) {
-					$foreignKey = $rel;
-					$realModelClass = ClassInfo::table_for_object_field($modelClass, "{$foreignKey}ID");
+					$foreignKey = $model->getReverseAssociation($component);
 					$this->query->addLeftJoin($component,
-						"\"$component\".\"ID\" = \"{$realModelClass}\".\"{$foreignKey}ID\"");
+						"\"$component\".\"ID\" = \"{$modelClass}\".\"{$foreignKey}ID\"");
 				
 					/**
 					 * add join clause to the component's ancestry classes so that the search filter could search on

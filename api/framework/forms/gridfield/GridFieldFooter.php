@@ -21,17 +21,15 @@ class GridFieldFooter implements GridField_HTMLProvider {
 	 * @var string - a message to display in the footer
 	 */
 	protected $message = null;
-	protected $showrecordcount;
 
 	/**
 	 *
 	 * @param string $message - a message to display in the footer
 	 */
-	public function __construct($message = null, $showrecordcount = true) {
+	public function __construct($message = null) {
 		if($message) {
 			$this->message = $message;
 		}
-		$this->showrecordcount = $showrecordcount;
 	}
 
 
@@ -39,7 +37,6 @@ class GridFieldFooter implements GridField_HTMLProvider {
 		$count = $gridField->getList()->count();
 
 		$forTemplate = new ArrayData(array(
-			'ShowRecordCount' => $this->showrecordcount,
 			'Message' => $this->message,
 			'FirstShownRecord' => 1,
 			'LastShownRecord' => $count,

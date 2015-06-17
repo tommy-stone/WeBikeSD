@@ -12,7 +12,7 @@
  *   $this->get("your/url");
  *
  *   // Submit a form on the page that you get in response
- *   $this->submitForm("MyForm_ID", "action_dologin", array("Email" => "invalid email ^&*&^"));
+ *   $this->submitForm("MyForm_ID",  array("Email" => "invalid email ^&*&^"));
  *
  *   // Validate the content that is returned
  *   $this->assertExactMatchBySelector("#MyForm_ID p.error", array("That email address is invalid."));
@@ -108,30 +108,6 @@ class FunctionalTest extends SapphireTest {
 		if(static::get_disable_themes()) {
 			Config::inst()->update('SSViewer', 'theme', $this->originalTheme);
 		}
-	}
-
-	/**
-	 * Run a test while mocking the base url with the provided value
-	 * @param string $url The base URL to use for this test
-	 * @param callable $callback The test to run
-	 */
-	protected function withBaseURL($url, $callback) {
-		$oldBase = Config::inst()->get('Director', 'alternate_base_url');
-		Config::inst()->update('Director', 'alternate_base_url', $url);
-		$callback($this);
-		Config::inst()->update('Director', 'alternate_base_url', $oldBase);
-	}
-
-	/**
-	 * Run a test while mocking the base folder with the provided value
-	 * @param string $folder The base folder to use for this test
-	 * @param callable $callback The test to run
-	 */
-	protected function withBaseFolder($folder, $callback) {
-		$oldFolder = Config::inst()->get('Director', 'alternate_base_folder');
-		Config::inst()->update('Director', 'alternate_base_folder', $folder);
-		$callback($this);
-		Config::inst()->update('Director', 'alternate_base_folder', $oldFolder);
 	}
 
 	/**

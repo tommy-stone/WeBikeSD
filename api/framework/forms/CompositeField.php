@@ -47,14 +47,13 @@ class CompositeField extends FormField {
 		if($children instanceof FieldList) {
 			$this->children = $children;
 		} elseif(is_array($children)) {
-			$this->children = new FieldList($children);
+			$this->children = new FieldList($children); 
 		} else {
-			//filter out null/empty items
-			$children = array_filter(func_get_args());
-			$this->children = new FieldList($children);
+			$children = is_array(func_get_args()) ? func_get_args() : array();
+			$this->children = new FieldList($children); 
 		}
 		$this->children->setContainerField($this);
-
+		
 		// Skipping FormField::__construct(), but we have to make sure this
 		// doesn't count as a broken constructor
 		$this->brokenOnConstruct = false;

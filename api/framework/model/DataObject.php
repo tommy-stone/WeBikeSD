@@ -713,7 +713,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			return $name;
 		} else {
 			$name = $this->singular_name();
-			if(substr($name,-1) == 'y') $name = substr($name,0,-1) . 'ie';
+			if(substr($name,-1) == 'e') $name = substr($name,0,-1);
+			else if(substr($name,-1) == 'y') $name = substr($name,0,-1) . 'ie';
+
 			return ucfirst($name . 's');
 		}
 	}
@@ -996,11 +998,10 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * It is expected that you call validate() in your own application to test that an object is valid before
 	 * attempting a write, and respond appropriately if it isn't.
 	 * 
-	 * @see {@link ValidationResult}
-	 * @return ValidationResult
+	 * @return A {@link ValidationResult} object
 	 */
 	protected function validate() {
-		$result = ValidationResult::create();
+		$result = new ValidationResult();
 		$this->extend('validate', $result);
 		return $result;
 	}
@@ -1665,15 +1666,19 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return array The database fields
 	 */
 	public function db($fieldName = null) {
-		$classes = ClassInfo::ancestry($this, true);
-
-		// If we're looking for a specific field, we want to hit subclasses first as they may override field types
-		if($fieldName) {
-			$classes = array_reverse($classes);
-		}
-
+		$classes = ClassInfo::ancestry($this);
+		$good = false;
 		$items = array();
+
 		foreach($classes as $class) {
+			// Wait until after we reach DataObject
+			if(!$good) {
+				if($class == 'DataObject') {
+					$good = true;
+				}
+				continue;
+			}
+
 			if(isset(self::$_cache_db[$class])) {
 				$dbItems = self::$_cache_db[$class];
 			} else {
@@ -1796,9 +1801,10 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 					}
 				}
 				
-			} else {	
+			} else {
+				
 				// Find all the extra fields for all components
-				$newItems = (array)Config::inst()->get($class, 'many_many_extraFields', Config::UNINHERITED);
+				$newItems = eval("return (array){$class}::\$many_many_extraFields;");
 				
 				foreach($newItems as $k => $v) {
 					if(!is_array($v)) {
@@ -1811,11 +1817,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 					}
 				}
 					
-				$items = isset($items) ? array_merge($newItems, $items) : $newItems;
+				return isset($items) ? array_merge($newItems, $items) : $newItems;
 			}
 		}
-
-		return isset($items) ? $items : null;
 	}
 	
 	/**
@@ -2321,6 +2325,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 				user_error('DataObject::setField: passed an object that is not a DBField', E_USER_WARNING);
 			}
 		
+			$defaults = $this->stat('defaults');
 			// if a field is not existing or has strictly changed
 			if(!isset($this->record[$fieldName]) || $this->record[$fieldName] !== $val) {
 				// TODO Add check for php-level defaults which are not set in the db
@@ -3290,7 +3295,6 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 					$types['has_one'] = (array)singleton($ancestorClass)->uninherited('has_one', true);
 					$types['has_many'] = (array)singleton($ancestorClass)->uninherited('has_many', true);
 					$types['many_many'] = (array)singleton($ancestorClass)->uninherited('many_many', true);
-					$types['belongs_many_many'] = (array)singleton($ancestorClass)->uninherited('belongs_many_many', true);
 				}
 				foreach($types as $type => $attrs) {
 					foreach($attrs as $name => $spec) {
@@ -3329,7 +3333,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 *
 	 * @return array
 	 */
-	public function summaryFields() {
+	public function summaryFields(){
 		$fields = $this->stat('summary_fields');
 
 		// if fields were passed in numeric array,
@@ -3353,13 +3357,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 
 		// Localize fields (if possible)
 		foreach($this->fieldLabels(false) as $name => $label) {
-			// only attempt to localize if the label definition is the same as the field name.
-			// this will preserve any custom labels set in the summary_fields configuration
-			if(isset($fields[$name]) && $name === $fields[$name]) {
-				$fields[$name] = $label;
-			}
+			if(isset($fields[$name])) $fields[$name] = $label;
 		}
-
+		
 		return $fields;
 	}
 
@@ -3435,8 +3435,6 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @var array
 	 */
 	private static $casting = array(
-		"ID" => 'Int',
-		"ClassName" => 'Varchar',
 		"LastEdited" => "SS_Datetime",
 		"Created" => "SS_Datetime",
 		"Title" => 'Text',

@@ -223,18 +223,7 @@ class DataList extends ViewableData implements SS_List, SS_Filterable, SS_Sortab
 			$query->limit($limit, $offset);
 		});
 	}
-
-	/**
-	 * Return a new DataList instance with distinct records or not
-	 *
-	 * @param bool $value
-	 */
-	public function distinct($value) {
-		return $this->alterDataQuery(function($query) use ($value){
-			$query->distinct($value);
-		});
-	}
-
+	
 	/**
 	 * Return a new DataList instance as a copy of this data list with the sort
 	 * order set.
@@ -244,7 +233,7 @@ class DataList extends ViewableData implements SS_List, SS_Filterable, SS_Sortab
 	 * @example $list = $list->sort('Name'); // default ASC sorting
 	 * @example $list = $list->sort('Name DESC'); // DESC sorting
 	 * @example $list = $list->sort('Name', 'ASC');
-	 * @example $list = $list->sort(array('Name'=>'ASC', 'Age'=>'DESC'));
+	 * @example $list = $list->sort(array('Name'=>'ASC,'Age'=>'DESC'));
 	 *
 	 * @param String|array Escaped SQL statement. If passed as array, all keys and values are assumed to be escaped.
 	 * @return DataList
@@ -321,7 +310,7 @@ class DataList extends ViewableData implements SS_List, SS_Filterable, SS_Sortab
 	 *
 	 * @todo extract the sql from $customQuery into a SQLGenerator class
 	 *
-	 * @param string|array Key and Value pairs, the array values are automatically sanitised for the DB query
+	 * @param string|array Key and Value pairs, the array values are automatically sanitised for the DB quesry
 	 * @return DataList
 	 */
 	public function filter() {
@@ -355,21 +344,21 @@ class DataList extends ViewableData implements SS_List, SS_Filterable, SS_Sortab
 	}
 
 	/**
-	 * Return a copy of this list which contains items matching any of these charactaristics.
+	 * Return a copy of this list which does not contain items matching any of these charactaristics.
 	 *
-	 * @example // only bob in the list
+	 * @example // filter bob from list
 	 *          $list = $list->filterAny('Name', 'bob'); 
 	 *          // SQL: WHERE "Name" = 'bob'
-	 * @example // azis or bob in the list
+	 * @example // filter aziz and bob from list
 	 *          $list = $list->filterAny('Name', array('aziz', 'bob'); 
 	 *          // SQL: WHERE ("Name" IN ('aziz','bob'))
-	 * @example // bob or anyone aged 21 in the list
+	 * @example // filter by bob or anybody aged 21
 	 *          $list = $list->filterAny(array('Name'=>'bob, 'Age'=>21)); 
 	 *          // SQL: WHERE ("Name" = 'bob' OR "Age" = '21')
-	 * @example // bob or anyone aged 21 or 43 in the list
+	 * @example // filter by bob or anybody aged 21 or 43
 	 *          $list = $list->filterAny(array('Name'=>'bob, 'Age'=>array(21, 43))); 
 	 *          // SQL: WHERE ("Name" = 'bob' OR ("Age" IN ('21', '43'))
-	 * @example // all bobs, phils or anyone aged 21 or 43 in the list
+	 * @example // bob age 21 or 43, phil age 21 or 43 would be excluded
 	 *          $list = $list->filterAny(array('Name'=>array('bob','phil'), 'Age'=>array(21, 43)));
 	 *          // SQL: WHERE (("Name" IN ('bob', 'phil')) OR ("Age" IN ('21', '43'))
 	 *

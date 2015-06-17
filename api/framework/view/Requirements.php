@@ -7,14 +7,7 @@
  * @package framework
  * @subpackage view
  */
-class Requirements implements Flushable {
-
-	/**
-	 * Triggered early in the request when someone requests a flush.
-	 */
-	public static function flush() {
-		self::delete_all_combined_files();
-	}
+class Requirements {
 
 	/**
 	 * Enable combining of css/javascript files.
@@ -279,13 +272,6 @@ class Requirements implements Flushable {
 		return self::backend()->delete_combined_files($combinedFileName);
 	}
 
-	/**
-	 * Deletes all generated combined files in the configured combined files directory,
-	 * but doesn't delete the directory itself.
-	 */
-	public static function delete_all_combined_files() {
-		return self::backend()->delete_all_combined_files();
-	}
 
 	/**
 	 * Re-sets the combined files definition. See {@link Requirements_Backend::clear_combined_files()}
@@ -469,7 +455,7 @@ class Requirements_Backend {
 	 * @var boolean
 	 */
 	protected $force_js_to_bottom = false;
-
+	
 	public function set_combined_files_enabled($enable) {
 		$this->combined_files_enabled = (bool) $enable;
 	}
@@ -758,22 +744,12 @@ class Requirements_Backend {
 				$jsRequirements = preg_replace('/>\n*/', '>', $jsRequirements);
 
 				// We put script tags into the body, for performance.
-				// If your template already has script tags in the body, then we try to put our script
+				// If your template already has script tags in the body, then we put our script
 				// tags just before those. Otherwise, we put it at the bottom.
 				$p2 = stripos($content, '<body');
 				$p1 = stripos($content, '<script', $p2);
-				
-				$commentTags = array();
-				$canWriteToBody = ($p1 !== false)
-					&&
-					//check that the script tag is not inside a html comment tag
-					!(
-						preg_match('/.*(?|(<!--)|(-->))/U', $content, $commentTags, 0, $p1)
-						&& 
-						$commentTags[1] == '-->'
-					);
 
-				if($canWriteToBody) {
+				if($p1 !== false) {
 					$content = substr($content,0,$p1) . $jsRequirements . substr($content,$p1);
 				} else {
 					$content = preg_replace("/(<\/body[^>]*>)/i", $jsRequirements . "\\1", $content);
@@ -1029,20 +1005,6 @@ class Requirements_Backend {
 		}
 	}
 
-	/**
-	 * Deletes all generated combined files in the configured combined files directory,
-	 * but doesn't delete the directory itself.
-	 */
-	public function delete_all_combined_files() {
-		$combinedFolder = $this->getCombinedFilesFolder();
-		if(!$combinedFolder) return false;
-
-		$path = Director::baseFolder() . '/' . $combinedFolder;
-		if(file_exists($path)) {
-			Filesystem::removeFolder($path, true);
-		}
-	}
-
 	public function clear_combined_files() {
 		$this->combine_files = array();
 	}
@@ -1123,7 +1085,7 @@ class Requirements_Backend {
 			}
 
 			// Determine if we need to build the combined include
-			if(file_exists($combinedFilePath)) {
+			if(file_exists($combinedFilePath) && !isset($_GET['flush'])) {
 				// file exists, check modification date of every contained file
 				$srcLastMod = 0;
 				foreach($fileList as $file) {
@@ -1139,16 +1101,10 @@ class Requirements_Backend {
 
 			if(!$refresh) continue;
 
-			$failedToMinify = false;
 			$combinedData = "";
 			foreach(array_diff($fileList, $this->blocked) as $file) {
 				$fileContent = file_get_contents($base . $file);
-				
-				try{
-					$fileContent = $this->minifyFile($file, $fileContent);
-				}catch(Exception $e){
-					$failedToMinify = true;
-				}
+				$fileContent = $this->minifyFile($file, $fileContent);
 
 				if ($this->write_header_comment) {
 					// write a header comment for each file for easier identification and debugging
@@ -1165,12 +1121,6 @@ class Requirements_Backend {
 				if(fwrite($fh, $combinedData) == strlen($combinedData)) $successfulWrite = true;
 				fclose($fh);
 				unset($fh);
-			}
-			
-			if($failedToMinify){
-				// Failed to minify, use unminified. This warning is raised at the end to allow code execution
-				// to complete in case this warning is caught inside a try-catch block. 
-				user_error('Failed to minify '.$file.', exception: '.$e->getMessage(), E_USER_WARNING);
 			}
 
 			// Unsuccessful write - just include the regular JS files, rather than the combined one

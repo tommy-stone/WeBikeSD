@@ -239,10 +239,10 @@ class SQLQuery {
 	/**
 	 * Set table for the SELECT clause.
 	 *
-	 * @example $query->setFrom('"MyTable"'); // SELECT * FROM "MyTable"
+	 * @example $query->setFrom("MyTable"); // SELECT * FROM MyTable
 	 *
-	 * @param string|array $from Single, or list of, ANSI quoted table names
-	 * @return self
+	 * @param string|array $from Escaped SQL statement, usually an unquoted table name
+	 * @return SQLQuery
 	 */
 	public function setFrom($from) {
 		$this->from = array();
@@ -252,10 +252,10 @@ class SQLQuery {
 	/**
 	 * Add a table to the SELECT clause.
 	 *
-	 * @example $query->addFrom('"MyTable"'); // SELECT * FROM "MyTable"
+	 * @example $query->addFrom("MyTable"); // SELECT * FROM MyTable
 	 *
-	 * @param string|array $from Single, or list of, ANSI quoted table names
-	 * @return self Self reference
+	 * @param string|array $from Escaped SQL statement, usually an unquoted table name
+	 * @return SQLQuery
 	 */
 	public function addFrom($from) {
 		if(is_array($from)) {
@@ -903,13 +903,9 @@ class SQLQuery {
 				else if(sizeof($join['filter']) == 1) $filter = $join['filter'][0];
 				else $filter = "(" . implode(") AND (", $join['filter']) . ")";
 
-				// Ensure tables are quoted, unless the table is actually a sub-select
-				$table = preg_match('/\bSELECT\b/i', $join['table'])
-					? $join['table']
-					: "\"{$join['table']}\"";
-				$aliasClause = ($alias != $join['table'])
-						? " AS \"{$alias}\""
-						: "";
+				$table = strpos(strtoupper($join['table']), 'SELECT') ? $join['table'] : "\"" 
+					. $join['table'] . "\"";
+				$aliasClause = ($alias != $join['table']) ? " AS \"" . Convert::raw2sql($alias) . "\"" : "";
 				$this->from[$alias] = strtoupper($join['type']) . " JOIN " 
 					. $table . "$aliasClause ON $filter";
 			}
@@ -1003,8 +999,8 @@ class SQLQuery {
 		if($column == null) {
 			if($this->groupby) {
 				$countQuery = new SQLQuery();
-				$countQuery->setSelect("count(*)");
-				$countQuery->setFrom('(' . $clone->sql() . ') all_distinct');
+				$countQuery->select("count(*)");
+				$countQuery->from = array('(' . $clone->sql() . ') all_distinct');
 
 				return $countQuery->execute()->value();
 

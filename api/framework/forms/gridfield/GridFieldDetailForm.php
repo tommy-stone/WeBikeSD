@@ -95,7 +95,7 @@ class GridFieldDetailForm implements GridField_URLHandler {
 
 		// if no validator has been set on the GridField and the record has a
 		// CMS validator, use that.
-		if(!$this->getValidator() && (method_exists($record, 'getCMSValidator') || $record instanceof Object && $record->hasMethod('getCMSValidator'))) {
+		if(!$this->getValidator() && method_exists($record, 'getCMSValidator')) {
 			$this->setValidator($record->getCMSValidator());
 		}
 
@@ -527,7 +527,7 @@ class GridFieldDetailForm_ItemRequest extends RequestHandler {
 			$this->record->write();
 			$list->add($this->record, $extraData);
 		} catch(ValidationException $e) {
-			$form->sessionMessage($e->getResult()->message(), 'bad', false);
+			$form->sessionMessage($e->getResult()->message(), 'bad');
 			$responseNegotiator = new PjaxResponseNegotiator(array(
 				'CurrentForm' => function() use(&$form) {
 					return $form->forTemplate();
@@ -544,9 +544,11 @@ class GridFieldDetailForm_ItemRequest extends RequestHandler {
 
 		// TODO Save this item into the given relationship
 
-		$link = '<a href="' . $this->Link('edit') . '">"' 
-			. htmlspecialchars($this->record->Title, ENT_QUOTES) 
-			. '"</a>';
+		// TODO Allow HTML in form messages
+		// $link = '<a href="' . $this->Link('edit') . '">"' 
+		// 	. htmlspecialchars($this->record->Title, ENT_QUOTES) 
+		// 	. '"</a>';
+		$link = '"' . $this->record->Title . '"';
 		$message = _t(
 			'GridFieldDetailForm.Saved', 
 			'Saved {name} {link}',
@@ -556,7 +558,7 @@ class GridFieldDetailForm_ItemRequest extends RequestHandler {
 			)
 		);
 		
-		$form->sessionMessage($message, 'good', false);
+		$form->sessionMessage($message, 'good');
 
 		if($new_record) {
 			return $controller->redirect($this->Link());
@@ -583,7 +585,7 @@ class GridFieldDetailForm_ItemRequest extends RequestHandler {
 
 			$this->record->delete();
 		} catch(ValidationException $e) {
-			$form->sessionMessage($e->getResult()->message(), 'bad', false);
+			$form->sessionMessage($e->getResult()->message(), 'bad');
 			return $this->getToplevelController()->redirectBack();
 		}
 
@@ -596,9 +598,9 @@ class GridFieldDetailForm_ItemRequest extends RequestHandler {
 		$toplevelController = $this->getToplevelController();
 		if($toplevelController && $toplevelController instanceof LeftAndMain) {
 			$backForm = $toplevelController->getEditForm();
-			$backForm->sessionMessage($message, 'good', false);
+			$backForm->sessionMessage($message, 'good');
 		} else {
-			$form->sessionMessage($message, 'good', false);
+			$form->sessionMessage($message, 'good');
 		}
 
 		//when an item is deleted, redirect to the parent controller

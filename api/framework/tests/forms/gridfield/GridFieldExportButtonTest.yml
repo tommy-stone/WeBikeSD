@@ -6,6 +6,3 @@ GridFieldExportButtonTest_Team:
         Name: Test2
         City: City2
 
-GridFieldExportButtonTest_NoView:
-	item1:
-		Name: Foo

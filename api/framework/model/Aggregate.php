@@ -50,22 +50,15 @@ class Aggregate extends ViewableData {
 	 */
 	public static function flushCache($class=null) {
 		$cache = self::cache();
-		$backend = $cache->getBackend();
-
-		if(
-			$backend instanceof Zend_Cache_Backend_ExtendedInterface
-			&& ($capabilities = $backend->getCapabilities())
-			&& $capabilities['tags']
-		) {
-			if( ! $class || $class == 'DataObject') {
-				$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('aggregate'));
-			} else {
-				$tags = ClassInfo::ancestry($class);
-				foreach($tags as &$tag) {
-					$tag = preg_replace('/[^a-zA-Z0-9_]/', '_', $tag);
-				}
-				$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
+		$capabilities = $cache->getBackend()->getCapabilities();
+		if($capabilities['tags'] && (!$class || $class == 'DataObject')) {
+			$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('aggregate'));
+		} elseif($capabilities['tags']) {
+			$tags = ClassInfo::ancestry($class);
+			foreach($tags as &$tag) {
+				$tag = preg_replace('/[^a-zA-Z0-9_]/', '_', $tag);
 			}
+			$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
 		} else {
 			$cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 		}

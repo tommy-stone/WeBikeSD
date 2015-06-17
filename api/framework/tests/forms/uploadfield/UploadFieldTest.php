@@ -404,12 +404,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertFileNotExists($file4->FullPath, 'File is also removed from filesystem');
 
 		// Test record-based permissions
-		$response = $this->mockFileDelete('ManyManyFiles', $fileNoDelete->ID);
-		$this->assertEquals(403, $response->getStatusCode());
-
-		// Test that folders can't be deleted
-		$folder = $this->objFromFixture('Folder', 'folder1-subfolder1');
-		$response = $this->mockFileDelete('ManyManyFiles', $folder->ID);
+		$response = $this->mockFileDelete('ManyManyFiles/', $fileNoDelete->ID);
 		$this->assertEquals(403, $response->getStatusCode());
 	}
 
@@ -446,13 +441,14 @@ class UploadFieldTest extends FunctionalTest {
 
 		$record = $this->objFromFixture('UploadFieldTest_Record', 'record1');
 		$file4 = $this->objFromFixture('File', 'file4');
+		$file5 = $this->objFromFixture('File', 'file5');
 		$fileNoEdit = $this->objFromFixture('File', 'file-noedit');
-		$folder = $this->objFromFixture('Folder', 'folder1-subfolder1');
+		$baseUrl = 'UploadFieldTest_Controller/Form/field/ManyManyFiles/item/' . $file4->ID;
 
-		$response = $this->mockFileEditForm('ManyManyFiles', $file4->ID);
+		$response = $this->get($baseUrl . '/edit');
 		$this->assertFalse($response->isError());
 
-		$response = $this->mockFileEdit('ManyManyFiles', $file4->ID, array('Title' => 'File 4 modified'));
+		$response = $this->post($baseUrl . '/EditForm', array('Title' => 'File 4 modified'));
 		$this->assertFalse($response->isError());
 
 		$record = DataObject::get_by_id($record->class, $record->ID, false);
@@ -460,17 +456,10 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertEquals('File 4 modified', $file4->Title);
 
 		// Test record-based permissions
-		$response = $this->mockFileEditForm('ManyManyFiles', $fileNoEdit->ID);
-		$this->assertEquals(403, $response->getStatusCode());
-
-		$response = $this->mockFileEdit('ManyManyFiles', $fileNoEdit->ID, array());
-		$this->assertEquals(403, $response->getStatusCode());
-
-		// Test folder permissions
-		$response = $this->mockFileEditForm('ManyManyFiles', $folder->ID);
-		$this->assertEquals(403, $response->getStatusCode());
-
-		$response = $this->mockFileEdit('ManyManyFiles', $folder->ID, array());
+		$response = $this->post(
+			'UploadFieldTest_Controller/Form/field/ManyManyFiles/item/' . $fileNoEdit->ID . '/edit',
+			array()
+		);
 		$this->assertEquals(403, $response->getStatusCode());
 	}
 
@@ -632,12 +621,6 @@ class UploadFieldTest extends FunctionalTest {
 			(bool)$parser->getBySelector('#CanAttachExistingFalseField .ss-uploadfield-fromfiles'),
 			'Removes "From files" button'
 		);
-
-		// Test requests to select files have the correct given permission
-		$response2 = $this->get('UploadFieldTest_Controller/Form/field/CanAttachExistingFalseField/select');
-		$this->assertEquals(403, $response2->getStatusCode());
-		$response3 = $this->get('UploadFieldTest_Controller/Form/field/HasOneFile/select');
-		$this->assertEquals(200, $response3->getStatusCode());
 	}
 
 	public function testSelect() {
@@ -802,35 +785,7 @@ class UploadFieldTest extends FunctionalTest {
 			"UploadFieldTest_Controller/Form/field/{$fileField}/fileexists?filename=".urlencode($fileName)
 		);
 	}
-
-	/**
-	 * Gets the edit form for the given file
-	 *
-	 * @param string $fileField Name of the field
-	 * @param integer $fileID ID of the file to delete
-	 * @return SS_HTTPResponse form response
-	 */
-	protected function mockFileEditForm($fileField, $fileID) {
-		return $this->get(
-			"UploadFieldTest_Controller/Form/field/{$fileField}/item/{$fileID}/edit"
-		);
-	}
-
-	/**
-	 * Mocks edit submissions to a file
-	 *
-	 * @param string $fileField Name of the field
-	 * @param integer $fileID ID of the file to delete
-	 * @param array $fields Fields to update
-	 * @return SS_HTTPResponse form response
-	 */
-	protected function mockFileEdit($fileField, $fileID, $fields = array()) {
-		return $this->post(
-			"UploadFieldTest_Controller/Form/field/{$fileField}/item/{$fileID}/EditForm",
-			$fields
-		);
-	}
-
+	
 	/**
 	 * Simulates a physical file deletion
 	 * 
@@ -840,7 +795,7 @@ class UploadFieldTest extends FunctionalTest {
 	 */
 	protected function mockFileDelete($fileField, $fileID) {
 		return $this->post(
-			"UploadFieldTest_Controller/Form/field/{$fileField}/item/{$fileID}/delete",
+			"UploadFieldTest_Controller/Form/field/HasOneFile/item/{$fileID}/delete",
 			array()
 		);
 	}

@@ -192,9 +192,8 @@ class GridFieldSortableHeader implements GridField_HTMLProvider, GridField_DataM
 	}
 	
 	/**
-	 * Returns the manipulated (sorted) DataList. Field names will simply add an 
-	 * 'ORDER BY' clause, relation names will add appropriate joins to the
-	 * {@link DataQuery} first.
+	 * Returns the manipulated (sorted) DataList. Field names will simply add an 'ORDER BY'
+	 * clause, relation names will add appropriate joins to the DataQuery first.
 	 * 
 	 * @param GridField
 	 * @param SS_List
@@ -224,19 +223,10 @@ class GridFieldSortableHeader implements GridField_HTMLProvider, GridField_DataM
 					// Traverse to the relational list
 					$tmpItem = $tmpItem->$methodName();
 
-					$joinClass = ClassInfo::table_for_object_field(
-						$lastAlias, 
-						$methodName . "ID"
-					);
-
-					// if the field isn't in the object tree then it is likely
-					// been aliased. In that event, assume what the user has
-					// provided is the correct value
-					if(!$joinClass) $joinClass = $lastAlias;
-
+					// Add a left join to the query
 					$dataList = $dataList->leftJoin(
 						$tmpItem->class,
-						'"' . $methodName . '"."ID" = "' . $joinClass . '"."' . $methodName . 'ID"',
+						'"' . $methodName . '"."ID" = "' . $lastAlias . '"."' . $methodName . 'ID"',
 						$methodName
 					);
 
@@ -254,7 +244,7 @@ class GridFieldSortableHeader implements GridField_HTMLProvider, GridField_DataM
 		// as ->sort() won't do it by itself. Blame PostgreSQL for making this necessary
 		$pieces = explode('.', $column);
 		$column = '"' . implode('"."', $pieces) . '"';
-	
+		
 		return $dataList->sort($column, $state->SortDirection);
 	}
 }

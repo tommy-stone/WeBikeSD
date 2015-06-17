@@ -138,50 +138,33 @@ ss.i18n = {
 			return stripStr(parts.join(" "));
 		},
 
-		/**
-		 * Substitutes %s with parameters
-	 	 * given in list. %%s is used to escape %s.
-	 	 * 
-		 * @param string S : The string to perform the substitutions on.
-		 * @return string The new string with substitutions made
-		 */
+	/*
+	 * printf()
+	 * C-printf like function, which substitutes %s with parameters
+	 * given in list. %%s is used to escape %s.
+	 *
+	 * Doesn't work in IE5.0 (splice)
+	 *
+	 * @param string S : string to perform printf on.
+	 * @param string L : Array of arguments for printf()
+	 */
 		sprintf: function(S) {
 			if (arguments.length == 1) return S;
 
-			var args  = [],
-					len   = arguments.length,
-					index = 0,
-					regx  = new RegExp('(.?)(%s)', 'g'),
-					result;
-
-			for (var i=1; i<len; ++i) {
+			var nS = "";
+			var tS = S.split("%s");
+			
+			var args = [];
+			for (var i=1, len = arguments.length; i <len; ++i) {
 				args.push(arguments[i]);
 			};
 
-			result = S.replace(regx, function(match, subMatch1, subMatch2, offset, string){
-				if (subMatch1 == '%') return match; // skip %%s
-				return subMatch1 + args[index++];
-			});
-
-			return result;
-		},
-
-		/**
-		 * Substitutes variables with a list of injections. 
-	 	 * 
-		 * @param string S : The string to perform the substitutions on.
-		 * @param object map : An object with the substitions map e.g. {var: value}
-		 * @return string The new string with substitutions made
-		 */
-		inject: function(S, map) {
-			var regx = new RegExp("\{([A-Za-z0-9_]*)\}", "g"),
-					result;
-
-			result = S.replace(regx, function(match, key, offset, string){
-				return (map[key]) ? map[key] : match;
-			});
-
-			return result;
+			for(var i=0; i<args.length; i++) {
+				if (tS[i].lastIndexOf('%') == tS[i].length-1 && i != args.length-1)
+					tS[i] += "s"+tS.splice(i+1,1)[0];
+				nS += tS[i] + args[i];
+			}
+			return nS + tS[tS.length-1];
 		},
 		
 		/**
