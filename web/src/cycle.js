@@ -209,6 +209,7 @@
 
         console.log("All trips count = " + count);
         self.tripCount = count + " trips in 2015";
+        $scope.tripCount=count + " trips in 2015";
         console.log(self.tripCount);
       });
   });
