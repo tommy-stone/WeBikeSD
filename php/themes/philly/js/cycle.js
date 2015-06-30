@@ -5,13 +5,13 @@
 
         $mdIconProvider
             .defaultIconSet("./bower_components/angular-material/demos/icon/demoSvgIconSets/assets/core-icons.svg", 128)
-            .icon("menu"       , "./assets/svg/menu.svg"        , 24)
-            .icon("star"      , "./assets/svg/star.svg"       , 24)
-            .icon("help"      , "./assets/svg/help.svg"       , 24)
-            .icon("shopping"      , "./assets/svg/shopping.svg"       , 24)
-            .icon("map"      , "./assets/svg/map.svg"       , 24)
-            .icon("share"      , "./assets/svg/share.svg"       , 24)
-            .icon("home"      , "./assets/svg/home.svg"       , 24)
+            .icon("menu"       , "themes/philly/svg/menu.svg"        , 24)
+            .icon("star"      , "themes/philly/svg/star.svg"       , 24)
+            .icon("help"      , "themes/philly/svg/help.svg"       , 24)
+            .icon("shopping"      , "themes/philly/svg/shopping.svg"       , 24)
+            .icon("map"      , "themes/philly/svg/map.svg"       , 24)
+            .icon("share"      , "themes/philly/svg/share.svg"       , 24)
+            .icon("home"      , "themes/philly/svg/home.svg"       , 24)
             
 
             $mdThemingProvider.theme('default')

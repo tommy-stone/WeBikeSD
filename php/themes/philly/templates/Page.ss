@@ -116,11 +116,11 @@
 
     </div>
 
-    <script src="{$ThemeDir}/components/home/home.js"></script>
-    <script src="{$ThemeDir}/components/terms/terms.js"></script>
-    <script src="{$ThemeDir}/components/about/about.js"></script>
-    <script src="{$ThemeDir}/components/partners/partners.js"></script>
-    <script src="{$ThemeDir}/components/shop/shop.js"></script>
-    <script src="{$ThemeDir}/components/maps/maps.js"></script>
+    <script src="/components/home/home.js"></script>
+    <script src="/components/terms/terms.js"></script>
+    <script src="/components/about/about.js"></script>
+    <script src="/components/partners/partners.js"></script>
+    <script src="/components/shop/shop.js"></script>
+    <script src="/components/maps/maps.js"></script>
   </body>
 </html>
