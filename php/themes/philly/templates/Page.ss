@@ -109,6 +109,7 @@
   </md-sidenav>
   {{tripCount}}
     <ng-viewport></ng-viewport>
+    <div>$Form</div>
     <span flex></span>
     <div id="counter" layout="row" layout-align="start center" layout-padding style="position:fixed;">
       <p>{{ul.tripCount}}</p>
