@@ -48,7 +48,7 @@ class Page_Controller extends ContentController {
 		        'https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js',
 		        'bower_components/angular-new-router/dist/router.es5.js',
 		        'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js',
-		        SSViewer::current_theme().'/js/cycle.js'
+		        'themes/philly/js/cycle.js'
 		    )
 		);
 	}
