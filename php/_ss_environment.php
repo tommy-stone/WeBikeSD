@@ -27,9 +27,9 @@ define("SS_DATABASE_USERNAME", $user);
 define('SS_DATABASE_PASSWORD', $pass);
 
 global $_FILE_TO_URL_MAPPING;
-$_FILE_TO_URL_MAPPING[getenv('OPENSHIFT_REPO_DIR').'php'] = 'http://cycle-philly.us.melle.io/';
+$_FILE_TO_URL_MAPPING[getenv('OPENSHIFT_REPO_DIR').'php'] = 'http://www.cyclephilly.org/';
 //$_FILE_TO_URL_MAPPING['/home/lloyd/glass/parcels/php'] = 'http://mytracks.phillyopen.org';
 // $_FILE_TO_URL_MAPPING['/var/www/html/trips/php'] = 'localhost';
-$_FILE_TO_URL_MAPPING['/Users/toby/melle/cycle_/philly/php'] = 'http://dev.cyclephilly.org/';
-$_FILE_TO_URL_MAPPING['/home/toby/melle/us/cycle/php'] = 'http://cycle-philly.us.melle.io/';
+//$_FILE_TO_URL_MAPPING['/Users/toby/melle/cycle_/philly/php'] = 'http://dev.cyclephilly.org/';
+//$_FILE_TO_URL_MAPPING['/home/toby/melle/us/cycle/php'] = 'http://cycle-philly.us.melle.io/';
 
