@@ -3,7 +3,7 @@
 var tripCount; 
 
 $(document).ready(function(){
-  var cycleRef = new Firebase('https://cyclephilly.firebaseio.com/trips-started/2014/');
+  var cycleRef = new Firebase('https://cyclephilly.firebaseio.com/trips-started/2015/');
   cycleRef.on('value', function(snapshot) {
   var fireTrips = snapshot.val();;
 //console.log(fireTrips);
