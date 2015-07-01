@@ -7,7 +7,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" style="padding-top:5px; padding-left:5px" href="/home">
-                    <img style="width:35px" id="navbar-logo" class="img-responsive" src="/cycle/img/logo.png" />
+                    <img style="width:35px" id="navbar-logo" class="img-responsive" src="/themes/cycle/img/logo.png" />
                 </a>
                 <div id="liveWeather" style="padding-left:40px;padding-top:10px">
                     <p style="color:#aaa"> <i id="weatherIcon" class="wi wi-day-lightning"></i> <span id="currentTemp">--</span>&deg; <span id="warning"><a data-toggle="tooltip" title="alert" href="#"><i class="fa fa-warning"></i></a></span></p>
