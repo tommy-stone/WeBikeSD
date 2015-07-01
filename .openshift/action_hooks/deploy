@@ -11,6 +11,8 @@
 unset GIT_DIR
 
 echo "running deploy scripts"
+ln -sf $OPENSHIFT_DATA_DIR\assets $OPENSHIFT_REPO_DIR/php/
+# ln -sf $OPENSHIFT_DATA_DIR\cache $OPENSHIFT_REPO_DIR/php/
 #link assets and cache folders to the persistent data directories
 # ln -sf $OPENSHIFT_DATA_DIR\api/assets $OPENSHIFT_REPO_DIR/api/
 # ln -sf $OPENSHIFT_DATA_DIR\api/cache $OPENSHIFT_REPO_DIR/api/
