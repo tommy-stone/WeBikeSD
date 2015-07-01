@@ -38,17 +38,17 @@ class Page_Controller extends ContentController {
 		Requirements::combine_files(
 		    'common.cycle.js',
 		    array(
-		        'bower_components/angular/angular.js',
-		        'bower_components/angular-animate/angular-animate.js',
-		        'bower_components/angular-aria/angular-aria.js',
-		        'bower_components/angular-material/angular-material.js',
-		        'bower_components/angular-new-router/dist/router.es5.js',
-		        'bower_components/angular-messages/angular-messages.min.js',
-		        'https://cdn.firebase.com/js/client/2.1.2/firebase.js',
-		        'https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js',
-		        'bower_components/angular-new-router/dist/router.es5.js',
-		        'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js',
-		        'themes/philly/js/cycle.js'
+		        // 'bower_components/angular/angular.js',
+		        // 'bower_components/angular-animate/angular-animate.js',
+		        // 'bower_components/angular-aria/angular-aria.js',
+		        // 'bower_components/angular-material/angular-material.js',
+		        // 'bower_components/angular-new-router/dist/router.es5.js',
+		        // 'bower_components/angular-messages/angular-messages.min.js',
+		        // 'https://cdn.firebase.com/js/client/2.1.2/firebase.js',
+		        // 'https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js',
+		        // 'bower_components/angular-new-router/dist/router.es5.js',
+		        // 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js',
+		        // 'themes/philly/js/cycle.js'
 		    )
 		);
 	}
