@@ -7,7 +7,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img id="navbar-logo" class="img-responsive" src="/phillysite/img/logo.png" />
+                    <img id="navbar-logo" class="img-responsive" src="/cycle/img/logo.png" />
                     <div id="logotext">
                         <div id="cyclephilly">CyclePhilly</div>
                         <div id="ride">Ride. Record. Reimagine Your Routes.</div>
