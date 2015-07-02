@@ -9,8 +9,10 @@
 class IndegoService implements WebServiceable {
 
     public function __construct() {
-        $this->FBURL = "https://cyclephilly.firebaseio.com";
-        $this->FBSecret = "bi7GsULLfYOxmv47jt3gh2rgnN5XvjlnpLVTu8wy";
+        $this->CycleURL = "https://cyclephilly.firebaseio.com";
+        $this->PHLURL = "https://phl.firebaseio.com";
+        $this->CycleSecret = "bi7GsULLfYOxmv47jt3gh2rgnN5XvjlnpLVTu8wy";
+        $this->PHLSecret = "91Hnwq3bFhPcIeXSfibsVm0E1li0mYN1TqtW5r8J";
 
     }
     
@@ -30,12 +32,16 @@ class IndegoService implements WebServiceable {
     }
 
     public function sync(){
-        $fire = new Firebase($this->FBURL,$this->FBSecret);
+        $fire = new Firebase($this->PHLURL,$this->PHLSecret);
         $phlapi = "https://api.phila.gov/bike-share-stations/v1";
         $rr = new RestfulService($phlapi,$expiry2 = 60);
         $resp2 = $rr->request();
         $indego = json_decode($resp2->getBody());
-        $fire->set("_indego_raw",$indego);
+        foreach ($indego->features as $key => $value) {
+            var_dump($value);
+            $fire->set("indego/kiosks/".$value->properties->kioskId,$value);
+        }
+        // $fire->set("_indego_raw",$indego);
         // var_dump($indego);exit;
         return array(
             'trips' => array('test'=>2,'test2'));
