@@ -38,7 +38,7 @@ class IndegoService implements WebServiceable {
         $resp2 = $rr->request();
         $indego = json_decode($resp2->getBody());
         foreach ($indego->features as $key => $value) {
-            // var_dump($value);
+            var_dump($value);
             $fire->set("indego/kiosks/".$value->properties->kioskId,$value);
         }
         // $fire->set("_indego_raw",$indego);
