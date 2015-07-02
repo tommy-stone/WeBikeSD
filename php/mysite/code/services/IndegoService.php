@@ -37,6 +37,7 @@ class IndegoService implements WebServiceable {
         $rr = new RestfulService($phlapi,$expiry2 = 60);
         $resp2 = $rr->request();
         $indego = json_decode($resp2->getBody());
+        
         foreach ($indego->features as $key => $value) {
             var_dump($value);
             $fire->set("indego/kiosks/".$value->properties->kioskId,$value);
