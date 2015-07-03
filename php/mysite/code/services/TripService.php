@@ -9,6 +9,8 @@
 class TripService implements WebServiceable {
 
     public function __construct() {
+        $this->CycleURL = "https://cyclephilly.firebaseio.com";
+        $this->CycleSecret = "bi7GsULLfYOxmv47jt3gh2rgnN5XvjlnpLVTu8wy";
         $this->GAPIKey = "AIzaSyB_MpeZnqXa-4ltbki0N0iCY70sVYxKLpM";
 
     }
@@ -16,7 +18,9 @@ class TripService implements WebServiceable {
     public function publicWebMethods() {
         return array(
             'query'      => 'GET',
-            'test' => 'GET'
+            'count' => 'GET',
+            'test' => 'GET',
+
         );
     }
 
@@ -25,6 +29,30 @@ class TripService implements WebServiceable {
             'SomeParam'         => 'Goes here',
             'Boolean'           => true,
             'Return'            => $param,
+        );
+    }
+
+    public function count(){
+        $window=7;
+        $controller = Director::get_current_page();
+        $save = $controller->getRequest()->requestVar('save');
+        $start = ($controller->getRequest()->requestVar('start')) ? $controller->getRequest()->requestVar('start') : '-1 week';
+        $end = ($controller->getRequest()->requestVar('end')) ? $controller->getRequest()->requestVar('end') : 'now';
+        
+        if($start){
+            $startdate = date('Y-m-d 00:00:00', strtotime($start));
+        }else{
+            $startdate = date('Y-m-d 00:00:00', mktime(0, 0, 0, date("m")  , date("d")-$window, date("Y")));
+        }
+        
+        $enddate = date('Y-m-d 00:00:00',strtotime($end));
+        $query = new SQLQuery();
+        $result = $query->setFrom('trip')->setSelect('*');
+        $result->addWhere("start BETWEEN '".$startdate."' AND '".$enddate."'")->execute();
+        return array(
+            'start' => $start,
+            'end' => $end,
+            'total' => $result->count()
         );
     }
 

@@ -18,4 +18,4 @@ ln -sf $OPENSHIFT_DATA_DIR\assets $OPENSHIFT_REPO_DIR/php/
 # ln -sf $OPENSHIFT_DATA_DIR\api/cache $OPENSHIFT_REPO_DIR/api/
 
 # php $OPENSHIFT_REPO_DIR\php/framework/cli-script.php dev/build flush=1
-php $OPENSHIFT_REPO_DIR\php/framework/cli-script.php jsonservice/Indego/sync flush=1
+php $OPENSHIFT_REPO_DIR\php/framework/cli-script.php jsonservice/Indego/sync
