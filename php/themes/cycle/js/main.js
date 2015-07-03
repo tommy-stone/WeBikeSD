@@ -92,7 +92,7 @@ $(document).ready(function(){
       var users = snapshot.val();
       $('#totalRiders').html(users.count);
   });
-  var cycleRef = new Firebase('https://cyclephilly.firebaseio.com/trips-started/2014/');
+  var cycleRef = new Firebase('https://cyclephilly.firebaseio.com/trips-started/2015/');
 google.setOnLoadCallback(function (){
   cycleRef.on('value', function(snapshot) {
     var snd = new Audio("/bell.wav"); // buffers automatically when created
