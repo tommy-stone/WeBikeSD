@@ -130,7 +130,7 @@ google.setOnLoadCallback(function (){
     // Create Calendar!
     
   var test2015Count = new Firebase('https://cyclephilly.firebaseio.com/trips-count');
-  console.log("test2015Count" + "- 2015 trip count from new api endpoint")
+  console.log("test2015Count" + "- 2015 trip count from new api endpoint");
 
     //Format datatable for viz
     dataTable = new google.visualization.DataTable();
@@ -141,6 +141,8 @@ google.setOnLoadCallback(function (){
     
     $('#tickerTotal').html(totalCount);
     $('#tickerToday').html(todayCount);
+    $('#tickerTotalCAtest').html(test2015Count);
+    
     
     //Check if stats is visible. if so, draw viz
     if($('#stats').is(':hidden')){
