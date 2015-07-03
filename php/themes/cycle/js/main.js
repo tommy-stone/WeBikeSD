@@ -129,7 +129,7 @@ google.setOnLoadCallback(function (){
     console.log("today: " + todayCount);
     // Create Calendar!
     
-  var test2015Count = new Firebase('https://cyclephilly.firebaseio.com/trips-count');
+  var test2015Count = new Firebase('https://cyclephilly.firebaseio.com/trips-count/2015');
   console.log("test2015Count" + "- 2015 trip count from new api endpoint");
 
     //Format datatable for viz
