@@ -93,14 +93,15 @@ $(document).ready(function(){
       $('#totalRiders').html(users.count);
   });
 
- google.setOnLoadCallback(function (){
+
   var counterRef = new Firebase('https://cyclephilly.firebaseio.com/trips-count/');
   counterRef.child('2015').on('value', function(snapshot) {
       var counter2015 = snapshot.val();
       $('#2015TotalTrips').html(counter2015);
-  }
+});
 
-  console.log(counter2015 + "<-- this is the count for 2015 trips from firebaseio")
+  
+  console.log(counter2015 + "<-- this is the count for 2015 trips from firebaseio");
 
 
 
