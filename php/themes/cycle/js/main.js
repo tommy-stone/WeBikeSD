@@ -137,8 +137,8 @@ google.setOnLoadCallback(function (){
 
   }
 
-  
-  console.log(test2015Count + "- 2015 trip count from new api endpoint");
+
+  console.log(fireTrips2015 + "- 2015 trip count from new api endpoint");
 
     //Format datatable for viz
     dataTable = new google.visualization.DataTable();
@@ -149,7 +149,7 @@ google.setOnLoadCallback(function (){
     
     $('#tickerTotal').html(totalCount);
     $('#tickerToday').html(todayCount);
-    $('#tickerTotalCAtest').html(test2015Count);
+    $('#tickerTotalCAtest').html(fireTrips2015);
     
     
     //Check if stats is visible. if so, draw viz
