@@ -134,11 +134,12 @@ google.setOnLoadCallback(function (){
   test2015Count.on('value', function(snapshot) {
     
     var fireTrips2015 = snapshot.val();
+    console.log(fireTrips2015 + "- 2015 trip count from new api endpoint");
 
   }
 
 
-  console.log(fireTrips2015 + "- 2015 trip count from new api endpoint");
+  
 
     //Format datatable for viz
     dataTable = new google.visualization.DataTable();
