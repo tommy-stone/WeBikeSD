@@ -29,8 +29,7 @@
               <a href="/maps" class="dropdown-toggle" data-toggle="dropdown">Maps <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#imap">About Maps</a></li>
-                <li><a href="/maps/timelapse">Timelapse Map</a></li>
-                <li><a href="/maps/all">Aggregate Map</a></li>
+              
                 <%-- <li><a href="#">My Map</a></li> --%>
               </ul>
             </li>

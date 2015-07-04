@@ -20,8 +20,7 @@
                     <li ><a href="/home">Home</a>
                     </li>
                     <li><a href="/#imap">About Maps</a></li>
-                    <li><a href="/maps/timelapse">Timelapse Map</a></li>
-                    <li><a href="/maps/all">Aggregate Map</a></li>
+                   
                     </li>
 
 

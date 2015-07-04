@@ -111,21 +111,7 @@
         <% end_with %>
   </section>
 
-  <!-- Section Shirts -->
-      <section class="pad-10 home-section" id="shirts" data-speed="1" data-type="background">
-        <% with Page("shirts") %>
-        <div class="container">
-            <div class="page-header">
-                <h1>$Title</h1>
-            </div>
-            <div class="row-fluid" style="background: rgba(0, 0, 0, 0.72);padding: 5px 10px;">
-                <div class="span4">
-                $Content
-                </div><!-- /.span4 -->
-            </div>
-        </div>
-        <% end_with %>
-  </section>
+
 
 
 
