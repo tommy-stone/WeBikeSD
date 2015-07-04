@@ -129,14 +129,14 @@ google.setOnLoadCallback(function (){
     console.log("today: " + todayCount);
     // Create Calendar!
     
-  var test2015Count = new Firebase('https://cyclephilly.firebaseio.com/trips-count/2015/total');
+  // var test2015Count = new Firebase('https://cyclephilly.firebaseio.com/trips-count/2015/total');
 
-  test2015Count.on('value', function(snapshot) {
+  // test2015Count.on('value', function(snapshot) {
     
-    var fireTrips2015 = snapshot.val();
-    console.log(fireTrips2015 + "- 2015 trip count from new api endpoint");
+  //   var fireTrips2015 = snapshot.val();
+  //   console.log(fireTrips2015 + "- 2015 trip count from new api endpoint");
 
-  }
+  // }
 
 
   
@@ -150,7 +150,7 @@ google.setOnLoadCallback(function (){
     
     $('#tickerTotal').html(totalCount);
     $('#tickerToday').html(todayCount);
-    $('#tickerTotalCAtest').html(fireTrips2015);
+    // $('#tickerTotalCAtest').html(fireTrips2015);
     
     
     //Check if stats is visible. if so, draw viz
