@@ -114,7 +114,7 @@ google.setOnLoadCallback(function (){
         if(obj.hasOwnProperty(day)){ // this accesses the days
           //console.log("for this day" + day + "- size = " + _.size(obj[day]));
           dayCount = _.size(obj[day]);
-          var dayObj = [new Date(2014, month-1,day), dayCount];
+          var dayObj = [new Date(2015, month-1,day), dayCount];
           calObj.push(dayObj);
           totalCount = totalCount + dayCount;
           if (day == dd) {
@@ -161,7 +161,7 @@ google.setOnLoadCallback(function (){
         setTimeout(function(){
           var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
         var options = {
-          title: "2014 CyclePhilly Trips",
+          title: "2015 CyclePhilly Trips",
           height: 150,
           calendar: { cellSize: 13 },
           noDataPattern: {
@@ -177,7 +177,7 @@ google.setOnLoadCallback(function (){
       
       var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
       var options = {
-        title: "2014 CyclePhilly Trips",
+        title: "2015 CyclePhilly Trips",
         height: 150,
         calendar: { cellSize: 13 },
         noDataPattern: {
