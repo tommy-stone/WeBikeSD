@@ -130,7 +130,15 @@ google.setOnLoadCallback(function (){
     // Create Calendar!
     
   var test2015Count = new Firebase('https://cyclephilly.firebaseio.com/trips-count/2015');
-  console.log("test2015Count" + "- 2015 trip count from new api endpoint");
+
+  test2015Count.on('value', function(snapshot) {
+    
+    var fireTrips2015 = snapshot.val();
+
+  }
+
+  
+  console.log(test2015Count + "- 2015 trip count from new api endpoint");
 
     //Format datatable for viz
     dataTable = new google.visualization.DataTable();
