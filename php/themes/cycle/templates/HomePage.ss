@@ -173,7 +173,10 @@
     <script src="{$ThemeDir}/js/v/bootstrap.min.js"></script>
     <script src="{$ThemeDir}/js/underscore.js"></script>
     <script src="{$ThemeDir}/js/countUp.min.js"></script>
-    <script src="{$ThemeDir}/js/main.js"></script>
+   
+    <script src="{$ThemeDir}/js/countIt.js"></script>
+<script src="{$ThemeDir}/js/main.js"></script>
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
