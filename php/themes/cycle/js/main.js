@@ -34,7 +34,7 @@ $(document).ready(function(){
     var counterRef = new Firebase('https://cyclephilly.firebaseio.com/trips-count/');
   counterRef.child('2015').on('value', function(snapshot) {
       var counter2015 = snapshot.val();
-      $('#2015TotalTrips').html(counter2015);
+      $('#2015TotalTrips').html(counter2015.total);
 });
   
   var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia/currently');
@@ -43,10 +43,13 @@ $(document).ready(function(){
       //console.log('Temperature is currently ' + snapshot.val());
       $('#weatherDescription').html(snapshot.val());
   });
+
   weatherRef.child('temperature').on('value', function(snapshot) {
       // console.log('Temperature is currently ' + snapshot.val());
       $('#currentTemp').html(snapshot.val());
   });
+
+
   weatherRef.child('icon').on('value', function(snapshot) {
       // Parse icon
       var str = snapshot.val();
@@ -103,7 +106,7 @@ $(document).ready(function(){
 
 
 
-  console.log(counter2015 + "<-- this is the count for 2015 trips from firebaseio");
+ //console.log(counter2015 + "<-- this is the count for 2015 trips from firebaseio");
 
 
 
