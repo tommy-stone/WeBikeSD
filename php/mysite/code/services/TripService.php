@@ -24,6 +24,7 @@ class TripService implements WebServiceable {
         );
     }
 
+    /* Sample Method */
     public function myMethod($param) {
         return array(
             'SomeParam'         => 'Goes here',
@@ -34,8 +35,14 @@ class TripService implements WebServiceable {
 
     public function count(){
         $window=7;
+        $fire = new Firebase($this->CycleURL,$this->CycleSecret);
         $controller = Director::get_current_page();
+        $type = $controller->getRequest()->requestVar('type');
+        
+        //If save is true, save results to firebase
         $save = $controller->getRequest()->requestVar('save');
+        //If save is true, path is required for which path to save to
+        $path = $controller->getRequest()->requestVar('path');
         $start = ($controller->getRequest()->requestVar('start')) ? $controller->getRequest()->requestVar('start') : '-1 week';
         $end = ($controller->getRequest()->requestVar('end')) ? $controller->getRequest()->requestVar('end') : 'now';
         
@@ -48,7 +55,17 @@ class TripService implements WebServiceable {
         $enddate = date('Y-m-d 00:00:00',strtotime($end));
         $query = new SQLQuery();
         $result = $query->setFrom('trip')->setSelect('*');
+
+        if($type){
+            $result->addWhere("purpose = '".$type."'");
+        }
         $result->addWhere("start BETWEEN '".$startdate."' AND '".$enddate."'")->execute();
+
+        if($save == true && $path){
+            //Writing to firebase
+            $fire->set($path,$result->count());
+        }
+
         return array(
             'start' => $start,
             'end' => $end,
