@@ -111,21 +111,7 @@
         <% end_with %>
   </section>
 
-  <!-- Section Shirts -->
-      <section class="pad-10 home-section" id="shirts" data-speed="1" data-type="background">
-        <% with Page("shirts") %>
-        <div class="container">
-            <div class="page-header">
-                <h1>$Title</h1>
-            </div>
-            <div class="row-fluid" style="background: rgba(0, 0, 0, 0.72);padding: 5px 10px;">
-                <div class="span4">
-                $Content
-                </div><!-- /.span4 -->
-            </div>
-        </div>
-        <% end_with %>
-  </section>
+
 
 
 
@@ -187,7 +173,10 @@
     <script src="{$ThemeDir}/js/v/bootstrap.min.js"></script>
     <script src="{$ThemeDir}/js/underscore.js"></script>
     <script src="{$ThemeDir}/js/countUp.min.js"></script>
-    <script src="{$ThemeDir}/js/main.js"></script>
+   
+    <script src="{$ThemeDir}/js/countIt.js"></script>
+<script src="{$ThemeDir}/js/main.js"></script>
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

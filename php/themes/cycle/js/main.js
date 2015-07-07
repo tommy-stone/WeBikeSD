@@ -30,6 +30,8 @@ google.load("visualization", "1.1", {packages:["calendar"]});
 
 //Weather Function
 $(document).ready(function(){
+
+
   
   var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia/currently');
   var hourlyWeatherRef = new Firebase('https://publicdata-weather.firebaseio.com/philadelphia/hourly');
@@ -37,10 +39,13 @@ $(document).ready(function(){
       //console.log('Temperature is currently ' + snapshot.val());
       $('#weatherDescription').html(snapshot.val());
   });
+
   weatherRef.child('temperature').on('value', function(snapshot) {
       // console.log('Temperature is currently ' + snapshot.val());
       $('#currentTemp').html(snapshot.val());
   });
+
+
   weatherRef.child('icon').on('value', function(snapshot) {
       // Parse icon
       var str = snapshot.val();
@@ -92,6 +97,19 @@ $(document).ready(function(){
       var users = snapshot.val();
       $('#totalRiders').html(users.count);
   });
+
+
+
+//     var counterRef = new Firebase('https://cyclephilly.firebaseio.com/trips-count/');
+//   counterRef.child('2015').on('value', function(snapshot) {
+//       var counter2015 = snapshot.val();
+//       $('#2015TotalTrips').html(counter2015.total);
+// });
+
+ //console.log(counter2015 + "<-- this is the count for 2015 trips from firebaseio");
+
+
+
   var cycleRef = new Firebase('https://cyclephilly.firebaseio.com/trips-started/2015/');
 google.setOnLoadCallback(function (){
   cycleRef.on('value', function(snapshot) {
@@ -114,7 +132,7 @@ google.setOnLoadCallback(function (){
         if(obj.hasOwnProperty(day)){ // this accesses the days
           //console.log("for this day" + day + "- size = " + _.size(obj[day]));
           dayCount = _.size(obj[day]);
-          var dayObj = [new Date(2014, month-1,day), dayCount];
+          var dayObj = [new Date(2015, month-1,day), dayCount];
           calObj.push(dayObj);
           totalCount = totalCount + dayCount;
           if (day == dd) {
@@ -129,7 +147,18 @@ google.setOnLoadCallback(function (){
     console.log("today: " + todayCount);
     // Create Calendar!
     
+  // var test2015Count = new Firebase('https://cyclephilly.firebaseio.com/trips-count/2015/total');
+
+  // test2015Count.on('value', function(snapshot) {
     
+  //   var fireTrips2015 = snapshot.val();
+  //   console.log(fireTrips2015 + "- 2015 trip count from new api endpoint");
+
+  // }
+
+
+  
+
     //Format datatable for viz
     dataTable = new google.visualization.DataTable();
     dataTable.addColumn({ type: 'date', id: 'Date' });
@@ -139,6 +168,8 @@ google.setOnLoadCallback(function (){
     
     $('#tickerTotal').html(totalCount);
     $('#tickerToday').html(todayCount);
+    // $('#tickerTotalCAtest').html(fireTrips2015);
+    
     
     //Check if stats is visible. if so, draw viz
     if($('#stats').is(':hidden')){
@@ -148,7 +179,7 @@ google.setOnLoadCallback(function (){
         setTimeout(function(){
           var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
         var options = {
-          title: "2014 CyclePhilly Trips",
+          title: "2015 CyclePhilly Trips",
           height: 150,
           calendar: { cellSize: 13 },
           noDataPattern: {
@@ -164,7 +195,7 @@ google.setOnLoadCallback(function (){
       
       var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
       var options = {
-        title: "2014 CyclePhilly Trips",
+        title: "2015 CyclePhilly Trips",
         height: 150,
         calendar: { cellSize: 13 },
         noDataPattern: {

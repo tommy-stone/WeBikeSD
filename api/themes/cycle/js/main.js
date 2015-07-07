@@ -87,12 +87,14 @@ $(document).ready(function(){
   });
 
   google.load("visualization", "1.1", {packages:["calendar"]});
-  var statsRef = new Firebase('https://cyclephilly.firebaseio.com/stats/');
+  var statsRef = new Firebase('https://cyclephilly.firebaseio.com/stats/users/count');
   statsRef.child('users').on('value', function(snapshot) {
       var users = snapshot.val();
       $('#totalRiders').html(users.count);
   });
-  var cycleRef = new Firebase('https://cyclephilly.firebaseio.com/trips-started/2014/');
+
+
+  var cycleRef = new Firebase('https://cyclephilly.firebaseio.com/trips-started/2015/');
 google.setOnLoadCallback(function (){
   cycleRef.on('value', function(snapshot) {
     var snd = new Audio("/bell.wav"); // buffers automatically when created
@@ -148,7 +150,7 @@ google.setOnLoadCallback(function (){
         setTimeout(function(){
           var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
         var options = {
-          title: "2014 CyclePhilly Trips",
+          title: "2015 CyclePhilly Trips",
           height: 150,
           calendar: { cellSize: 13 },
           noDataPattern: {
@@ -164,7 +166,7 @@ google.setOnLoadCallback(function (){
       
       var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
       var options = {
-        title: "2014 CyclePhilly Trips",
+        title: "2015 CyclePhilly Trips",
         height: 150,
         calendar: { cellSize: 13 },
         noDataPattern: {
