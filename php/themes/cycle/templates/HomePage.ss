@@ -105,8 +105,13 @@
             <div class="row-fluid">
                 <div class="span4">
                     <p>Six months of CyclePhilly user data analyzed by trip-type courtesy of the Delaware Valley Regional Planning Commission.</p>
-          <p><a href="http://www.dvrpc.org/webmaps/cyclephilly/"><img class="percent-80" title="" src="//cyclephilly.org/assets/Uploads/Screen+Shot+2015-02-18+at+7.10.56+AM.png" alt="DVRPC Map" width="400"></a></p>
-          
+          <p><a href="http://www.dvrpc.org/webmaps/cyclephilly/">
+Check out the map &raquo;
+            <%-- <img class="percent-80" title="" src="//cyclephilly.org/assets/Uploads/Screen+Shot+2015-02-18+at+7.10.56+AM.png" alt="DVRPC Map" width="400"> --%>
+
+
+        </a></p>
+
                 </div>
                 <!-- /.span4 -->
             </div>
