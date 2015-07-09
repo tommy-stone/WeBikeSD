@@ -12,4 +12,4 @@ unset GIT_DIR
 
 cd $OPENSHIFT_REPO_DIR
 # rm -rf assets
-php $OPENSHIFT_REPO_DIR\php/framework/cli-script.php jsonservice/Trip/count start=01-01-2015 save=true path=/trips-count/total/2015
+php $OPENSHIFT_REPO_DIR\php/framework/cli-script.php jsonservice/Trip/count start=01-01-2015 save=true path=/trips-count/2015/total
