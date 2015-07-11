@@ -35,7 +35,7 @@
               </ul>
             </li>
                     </li>
-                    <li><a href="#shirts">Shirts</a></li>
+                     <%-- <li><a href="#shirts">Shirts</a></li> --%>
                
 		    <li><a href="http://community.cyclephilly.org">Community</a>
                     </li>
