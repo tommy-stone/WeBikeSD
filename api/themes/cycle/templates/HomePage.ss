@@ -59,7 +59,7 @@
                    </div>
 
 
-                <%-- Twitter start  --%>
+                <%-- Twitter start here --%>
 
                 <div class="container" style="max-height: 70px;">
                     <div class="row">
