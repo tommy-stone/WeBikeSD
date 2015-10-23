@@ -54,6 +54,10 @@
                         <img class="no-scale" src="{$ThemeDir}/img/appstore.png" />
                         </a>
                     </p> 
+                    
+                       <p class="text-center">
+                           <a href="http://awards.codeforamerica.org/2015/winner/CyclePhilly/"><img class="percent-50" src="{$ThemeDir}/img/logo-tech-awards-gray.png" /></a
+                     </p>
                    </div>
                 <%-- Twitter start  --%>
                 <div class="container" style="max-height: 70px;">
