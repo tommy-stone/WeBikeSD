@@ -21,13 +21,6 @@ class API extends Controller {
         
 	}
 
-	public function userTest(){
-		$query = new SQLQuery();
-        $result = $query->setFrom('user')->setSelect('email,id')->addWhere("email = 'juliana.f.reyes@gmail.com'")->execute();
-         foreach($result as $row) {
-        	echo "ID: ".$row['id'].PHP_EOL;
-        }
-	}
 
 	public function test($userid){
 		$window=5;
