@@ -1,5 +1,5 @@
-# cyclephilly
-CyclePhilly bike tracking application
+# WeBikeSD
+WeBikeSD bike tracking application (based on CyclePhilly)
 ===================
 
 This Git repository helps you get up and running quickly w/ with the cycle_ back-end
